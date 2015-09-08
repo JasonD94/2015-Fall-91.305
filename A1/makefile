@@ -6,4 +6,4 @@ CFLAGS	 = -Wall
 # (that doesn't seem to work yet though.)
 
 all:
-	$(CC) $(CFLAGS) a1.c -o test.out
+	$(CC) $(CFLAGS) a1.c -o a1
