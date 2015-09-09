@@ -22,12 +22,14 @@
 
 # Executables
 *.exe
-*.out
 *.app
 *.i*86
 *.x86_64
 *.hex
-a1
 
 # Debug files
 *.dSYM/
+
+# Assignment 1 stuff
+a1
+standard_output.out

@@ -23,13 +23,16 @@ union float_32 {
     } part;
 } float_32;
 
+
 // Function to convert the input into readable output.
 void print_output(float output);
 
 // Function to output to binary.
 void output_binary(int integer_input);
 
-int main(int argc, char* argv[]) {
+
+int main() {
+
     float input;
     int valid = 0;
 
@@ -38,25 +41,23 @@ int main(int argc, char* argv[]) {
         printf("Enter a float(s): ");
         valid = scanf(" %f", &input);
         print_output(input);
+
     // scanf will return 1 if it gets a valid input, 0 if it gets invalid input and -1 on EOF.
-    // It should separate inputs by ignoring newlines and quit whenever it hits EOF.
     } while (valid == 1);
 
     return 0;
 }
 
 
+//  TODO: check output and compare.
 void print_output(float output) {
 
-    // Use the union to print out the mantissa / exponent / sign.
-    float_32.float_value = output;
-
-    // TODO: check output and compare.
+    float_32.float_value = output;              // Use the union to print out the mantissa / exponent / sign.
 
     /*
-        Note - decided to line the lines up correctly, so I found an easier way to do so using Stackoverflow.
-        (although I'm aligning right not left)
-        https://stackoverflow.com/questions/1809399/c-how-to-justify-output-lines-using-printf-to-get-equal-length
+            Note - I decided to line the lines up correctly, so I found an easier way to do so using Stackoverflow.
+            (although I'm aligning both right and left at spots, depending how I want the output to look exactly.)
+            https://stackoverflow.com/questions/1809399/c-how-to-justify-output-lines-using-printf-to-get-equal-length
     */
 
     printf("The floating point value for %.1f is broken out as: \n", output);
@@ -73,12 +74,14 @@ void print_output(float output) {
     printf("%12s %-10f %10s ", "in base 10:", output, "or:");
     output_binary(output);
 
+    printf("\n");
     return;
 }
 
-/*  TODO: test this function.
-    Idea from this post, but I changed it to a char array to make it remove leading zeroes.
-https://stackoverflow.com/questions/19823359/represent-unsigned-integer-in-binary
+
+/*
+        Idea from this post, but I changed it to a char array to make it easy to remove leading zeroes.
+        https://stackoverflow.com/questions/19823359/represent-unsigned-integer-in-binary
 */
 void output_binary(int integer_input) {
     char bit_array[32];
@@ -105,12 +108,12 @@ void output_binary(int integer_input) {
         if(bit_array[x] == '0') {                   // Just remove any zeroes we find!
             bit_array[x] = ' ';
         }
-        else if (bit_array[x] == '1') {         // And as soon as we find a 1, quit the loop!
+        else if (bit_array[x] == '1') {         // And as soon as we find a 1, quit out of the loop!
             break;
         }
 
         // But, what if we removed the only zero?
-        // We better add that back in.
+        // We better add that back in. (we shouldn't get here unless the entire char array was filled with 0's.)
         if (x == 0) {
             bit_array[31] = '0';
         }
@@ -134,6 +137,5 @@ void output_binary(int integer_input) {
     }
 
     printf("\n");
-
     return;
 }

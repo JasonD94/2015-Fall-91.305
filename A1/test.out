@@ -1,0 +1,66 @@
+Enter a float(s): The floating point value for 237.8 is broken out as: 
+   mantissa: 0x6dc000          or: 1101 1011 1000 0000 0000 000
+   exponent: 0x86              or: 1000 0110 
+       sign: 0                 or: 0
+ in base 10: 237.750000        or: 1110 1101 
+
+Enter a float(s): The floating point value for -0.0 is broken out as: 
+   mantissa: 0x9999b           or: 1001 1001 1001 1001 1011 
+   exponent: 0x6a              or: 1101 010
+       sign: 1                 or: 1
+ in base 10: -0.000001         or: 0
+
+Enter a float(s): The floating point value for -92457320.0 is broken out as: 
+   mantissa: 0x30592d          or: 1100 0001 0110 0100 1011 01
+   exponent: 0x99              or: 1001 1001 
+       sign: 1                 or: 1
+ in base 10: -92457320.000000        or: 1111 1010 0111 1101 0011 0110 1001 1000 
+
+Enter a float(s): The floating point value for 602299993035875123462144.0 is broken out as: 
+   mantissa: 0x7f157f          or: 1111 1110 0010 1010 1111 111
+   exponent: 0xcd              or: 1100 1101 
+       sign: 0                 or: 0
+ in base 10: 602299993035875123462144.000000        or: 1000 0000 0000 0000 0000 0000 0000 0000 
+
+Enter a float(s): The floating point value for 0.0 is broken out as: 
+   mantissa: 0x1d279           or: 1110 1001 0011 1100 1
+   exponent: 0x0               or: 0
+       sign: 0                 or: 0
+ in base 10: 0.000000          or: 0
+
+Enter a float(s): The floating point value for 6.0 is broken out as: 
+   mantissa: 0x400000          or: 1000 0000 0000 0000 0000 000
+   exponent: 0x81              or: 1000 0001 
+       sign: 0                 or: 0
+ in base 10: 6.000000          or: 110
+
+Enter a float(s): The floating point value for 1.0 is broken out as: 
+   mantissa: 0x0               or: 0
+   exponent: 0x7f              or: 1111 111
+       sign: 0                 or: 0
+ in base 10: 1.000000          or: 1
+
+Enter a float(s): The floating point value for 0.0 is broken out as: 
+   mantissa: 0x0               or: 0
+   exponent: 0x0               or: 0
+       sign: 0                 or: 0
+ in base 10: 0.000000          or: 0
+
+Enter a float(s): The floating point value for 4.2 is broken out as: 
+   mantissa: 0x686c1           or: 1101 0000 1101 1000 001
+   exponent: 0x81              or: 1000 0001 
+       sign: 0                 or: 0
+ in base 10: 4.203949          or: 100
+
+Enter a float(s): The floating point value for 99999997952.0 is broken out as: 
+   mantissa: 0x3a43b7          or: 1110 1001 0000 1110 1101 11
+   exponent: 0xa3              or: 1010 0011 
+       sign: 0                 or: 0
+ in base 10: 99999997952.000000        or: 1000 0000 0000 0000 0000 0000 0000 0000 
+
+Enter a float(s): The floating point value for 99999997952.0 is broken out as: 
+   mantissa: 0x3a43b7          or: 1110 1001 0000 1110 1101 11
+   exponent: 0xa3              or: 1010 0011 
+       sign: 0                 or: 0
+ in base 10: 99999997952.000000        or: 1000 0000 0000 0000 0000 0000 0000 0000 
+
