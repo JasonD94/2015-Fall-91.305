@@ -38,8 +38,15 @@ int main() {
 
     // Get input until we find a newline ('\n')
     do {
-        printf("Enter a float(s): ");
+        //printf("Enter a float(s): ");
         valid = scanf(" %f", &input);
+
+        // Make sure the user didn't enter invalid input.
+        // scanf will return 0 if it gets invalid input and -1 on EOF.
+        if (valid == 0 || valid == -1) {
+            break;
+        }
+
         print_output(input);
 
     // scanf will return 1 if it gets a valid input, 0 if it gets invalid input and -1 on EOF.
@@ -85,8 +92,9 @@ void print_output(float output) {
 
 
 /*
-        Idea from this post, but I changed it to a char array to make it easy to remove leading zeroes.
-        https://stackoverflow.com/questions/19823359/represent-unsigned-integer-in-binary
+        This function prints out a binary number given an integer.
+        I have it setup to space out the mantissa and the exponent in groups of 3 or 4, like the
+        example given does.
 */
 void output_binary(int integer_input) {
     int bit_array[32];
@@ -101,6 +109,14 @@ void output_binary(int integer_input) {
     for (x = 0; integer_input > 0; x++) {
         bit_array[x] = integer_input % 2;          // Place the remainder in the bit_array
         integer_input = integer_input / 2;          // Continue dividing by 2 until divide is equal to zero.
+    }
+
+    // This fixes the outputting of the exponent not being lined up right.
+    if (x-1 == 7) {
+        count = 1;
+    }
+    else {
+        count = 2;
     }
 
     // Reverse the order of the bit array, since we recorded the binary number in the opposite order
