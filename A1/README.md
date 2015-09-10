@@ -40,9 +40,9 @@ The main issue I ran into was that leading zeros would not print out and if the 
 would randomly break the output. This approach seems to work and the output looks valid. I also created a test file
 called test.out which uses numers from the following IEEE 754 calculators:
 
-(Main calculator used)[http://www.h-schmidt.net/FloatConverter/IEEE754.html]
+Main calculator used: http://www.h-schmidt.net/FloatConverter/IEEE754.html
 
-(This one was a good alternate to check against)[http://babbage.cs.qc.edu/courses/cs341/IEEE-754.html]
+This one was a good alternate to check against: http://babbage.cs.qc.edu/courses/cs341/IEEE-754.html
 
 Testing
 ========================
