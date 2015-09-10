@@ -28,7 +28,7 @@ union float_32 {
 void print_output(float output);
 
 // Function to output to binary.
-void output_binary(int integer_input);
+void output_binary(int integer_input, int bits);
 
 
 int main() {
@@ -70,21 +70,21 @@ void print_output(float output) {
     printf("The floating point value for %.1f is broken out as: \n", output);
 
     // Mantissa
-    printf("%12s 0x%-8x %10s %11s", "mantissa:", float_32.part.mantissa, "or: ", " ");
-    output_binary(float_32.part.mantissa);
+    printf("%12s 0x%-8x %20s %11s", "mantissa:", float_32.part.mantissa, "or: ", " ");
+    output_binary(float_32.part.mantissa, 23);
 
     // Exponent
-    printf("\n%12s 0x%-8x %10s %1s", "exponent:", float_32.part.exponent, "or: ", " ");
-    output_binary(float_32.part.exponent);
+    printf("\n%12s 0x%-8x %20s %1s", "exponent:", float_32.part.exponent, "or: ", " ");
+    output_binary(float_32.part.exponent, 8);
 
     // Sign
-    printf("\n%12s %-10x %9s %x\n", "sign:", float_32.part.sign, "or:", float_32.part.sign);
+    printf("\n%12s %-10x %19s %x\n", "sign:", float_32.part.sign, "or:", float_32.part.sign);
 
     // In base 10
-    printf("%12s %-10f %10s", "in base 10:", output, "or: ");
-    printf ("%x ", float_32.part.sign);
-    output_binary(float_32.part.exponent);
-    output_binary(float_32.part.mantissa);
+    printf("%12s %-10f ", "in base 10:", output);
+    printf("\n%43s %x ", "or:", float_32.part.sign);
+    output_binary(float_32.part.exponent, 8);
+    output_binary(float_32.part.mantissa, 23);
     printf("\n\n");
 
     return;
@@ -96,7 +96,7 @@ void print_output(float output) {
         I have it setup to space out the mantissa and the exponent in groups of 3 or 4, like the
         example given does.
 */
-void output_binary(int integer_input) {
+void output_binary(int integer_input, int bits) {
     int bit_array[32];
     int x, y, count = 1;
 
@@ -111,31 +111,39 @@ void output_binary(int integer_input) {
         integer_input = integer_input / 2;          // Continue dividing by 2 until divide is equal to zero.
     }
 
-    // This fixes the outputting of the exponent not being lined up right.
-    if (x-1 == 7) {
-        count = 1;
-    }
-    else {
-        count = 2;
-    }
-
-    // Reverse the order of the bit array, since we recorded the binary number in the opposite order
-    for (y = x - 1; y >= 0; y-- ) {
-        if(y > 19) {                                // If this is the mantissa, then output as a group of 3, then groups of 4.
-            printf("%d", bit_array[y]);
-        }
-        else if (y == 19) {                     // Separate the group of 3 (assuming this is the mantissa).
-            printf(" %d", bit_array[y]);
-        }
-        else {                                          // This part is either the rest of the mantissa or the exponent.
+    // Exponent stuff
+    if (bits == 8) {
+        for (y = 7; y >= 0; y--) {
             printf("%d", bit_array[y]);
 
-            if(count == 4) {                     // Catch groups of 4 by counting to 4.
+            if(count == 4) {                          // Catch groups of 4 by counting to 4.
                 printf(" ");
                 count = 0;
             }
 
             count++;
+        }
+    }
+
+    // Mantissa stuff
+    if (bits == 23) {
+        for (y = 22; y >= 0; y--) {
+            if(y > 19) {                                      // Output the group of 3
+                printf("%d", bit_array[y]);
+            }
+            else if (y == 19) {                          // Separate the group of 3 by a space.
+                printf(" %d", bit_array[y]);
+            }
+            else {                                              // This part is either the rest of the mantissa.
+                printf("%d", bit_array[y]);
+
+                if(count == 4) {                            // Catch groups of 4 by counting to 4.
+                    printf(" ");
+                    count = 0;
+                }
+
+                count++;
+            }
         }
     }
 
