@@ -5,13 +5,13 @@ Assignment 1 for Computer Architecture.
 
 This programs reads any number of floating point numbers from standard input, and outputs the following information:
 
-*mantissa
-*exponent
-*sign
-*base 10 equivalent
+* mantissa
+* exponent
+* sign
+* base 10 equivalent
 
 Approach
-------------------
+========
 I used a union to get the mantissa, exponent and sign, as I included a struct with several unsigned integers inside of the union.
 This works as the union stores things in the same memory space, so getting the mantissa / exponent / sign were relatively
 easy with this approach. The tricky part was getting the output looking correct and converting the mantissa / exponent to
@@ -59,3 +59,11 @@ To get the program's output into a file, run this command:
 # Makefile link
 The following was a useful link on Makefiles and was helpful for figuring out how to use the diff command.
 [Creating makefiles and using diff to test output](http://www.cs.toronto.edu/~penny/teaching/csc444-05f/maketutorial.html)
+
+
+Final Thoughts
+=========
+Overall I think I accomplished the main goal of the assignment, which was to output the various parts of a floating point
+number, including the mantissa / exponent / sign and such. I ran into some issues along the way which I noted above. I feel
+like there are still a few bugs with the program that should be worked out, and as a result as is this program is likely
+somewhere in the B range.
