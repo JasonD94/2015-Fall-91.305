@@ -116,9 +116,9 @@ void output_binary(int integer_input, int bits) {
         for (y = 7; y >= 0; y--) {
             printf("%d", bit_array[y]);
 
-            if(count == 4) {                          // Catch groups of 4 by counting to 4.
+            if(count == 4) {                                // Catch groups of 4 by counting to 4.
                 printf(" ");
-                count = 0;
+                count = 0;                                      // Equal to 0 since count will be incremented right after.
             }
 
             count++;
@@ -127,6 +127,8 @@ void output_binary(int integer_input, int bits) {
 
     // Mantissa stuff
     if (bits == 23) {
+        count = 2;                  // fix the first group of 4 being wrong.
+
         for (y = 22; y >= 0; y--) {
             if(y > 19) {                                      // Output the group of 3
                 printf("%d", bit_array[y]);
@@ -134,7 +136,7 @@ void output_binary(int integer_input, int bits) {
             else if (y == 19) {                          // Separate the group of 3 by a space.
                 printf(" %d", bit_array[y]);
             }
-            else {                                              // This part is either the rest of the mantissa.
+            else {                                                 // This part is either the rest of the mantissa.
                 printf("%d", bit_array[y]);
 
                 if(count == 4) {                            // Catch groups of 4 by counting to 4.
