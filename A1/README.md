@@ -42,9 +42,9 @@ Testing
 The makefile I created tests against test.out. It runs a diff command against standard_output.out, which will show any
 differences between them. I used the following two calculators to generate my test.out:
 
-[Main calculator used:](http://www.h-schmidt.net/FloatConverter/IEEE754.html)
+[Main calculator used](http://www.h-schmidt.net/FloatConverter/IEEE754.html)
 
-[This one was a good alternate to check against:](http://babbage.cs.qc.edu/courses/cs341/IEEE-754.html)
+[This one was a good alternate to check against](http://babbage.cs.qc.edu/courses/cs341/IEEE-754.html)
 
 # NOTE
 For some reason my program outputs the last test twice, so to get the diff command to not complain I entered it twice
@@ -62,6 +62,7 @@ To get the program's output into a file, run this command:
 
 # Makefile link
 The following was a useful link on Makefiles and was helpful for figuring out how to use the diff command.
+
 [Creating makefiles and using diff to test output](http://www.cs.toronto.edu/~penny/teaching/csc444-05f/maketutorial.html)
 
 
