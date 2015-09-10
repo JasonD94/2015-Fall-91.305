@@ -62,19 +62,24 @@ void print_output(float output) {
 
     printf("The floating point value for %.1f is broken out as: \n", output);
 
-    printf("%12s 0x%-8x %10s ", "mantissa:", float_32.part.mantissa, "or:");
+    // Mantissa
+    printf("%12s 0x%-8x %10s %11s", "mantissa:", float_32.part.mantissa, "or: ", " ");
     output_binary(float_32.part.mantissa);
 
-    printf("%12s 0x%-8x %10s ", "exponent:", float_32.part.exponent, "or:");
+    // Exponent
+    printf("\n%12s 0x%-8x %10s %1s", "exponent:", float_32.part.exponent, "or: ", " ");
     output_binary(float_32.part.exponent);
 
-    printf("%12s %-10x %10s ", "sign:", float_32.part.sign, "or:");
-    output_binary(float_32.part.sign);
+    // Sign
+    printf("\n%12s %-10x %9s %x\n", "sign:", float_32.part.sign, "or:", float_32.part.sign);
 
-    printf("%12s %-10f %10s ", "in base 10:", output, "or:");
-    output_binary(output);
+    // In base 10
+    printf("%12s %-10f %10s", "in base 10:", output, "or: ");
+    printf ("%x ", float_32.part.sign);
+    output_binary(float_32.part.exponent);
+    output_binary(float_32.part.mantissa);
+    printf("\n\n");
 
-    printf("\n");
     return;
 }
 
@@ -84,50 +89,32 @@ void print_output(float output) {
         https://stackoverflow.com/questions/19823359/represent-unsigned-integer-in-binary
 */
 void output_binary(int integer_input) {
-    char bit_array[32];
-    int x, count = 1, k = 1;
+    int bit_array[32];
+    int x, y, count = 1;
 
     // Initalize everything to zero.
     for (x = 0; x < 32; x++) {
-        bit_array[x] = '0';
+        bit_array[x] = 0;
     }
 
-    // Convert to 1s and 0s, spacing everything out in groups of 4.
-    for (x = 0; x < 32; x++) {
-        if (integer_input & k) {        // Bitwise AND operation.
-            bit_array[x] = '1';
-        }
-        else {
-            bit_array[x] = '0';
-        }
-        k = k << 1;                         // Left shift by one place each time.
+    // Convert to binary
+    for (x = 0; integer_input > 0; x++) {
+        bit_array[x] = integer_input % 2;          // Place the remainder in the bit_array
+        integer_input = integer_input / 2;          // Continue dividing by 2 until divide is equal to zero.
     }
 
-    // Hack: remove leading zeroes by replacing them with spaces!
-    for (x = 31; x >= 0; x--) {
-        if(bit_array[x] == '0') {                   // Just remove any zeroes we find!
-            bit_array[x] = ' ';
+    // Reverse the order of the bit array, since we recorded the binary number in the opposite order
+    for (y = x - 1; y >= 0; y-- ) {
+        if(y > 19) {                                // If this is the mantissa, then output as a group of 3, then groups of 4.
+            printf("%d", bit_array[y]);
         }
-        else if (bit_array[x] == '1') {         // And as soon as we find a 1, quit out of the loop!
-            break;
+        else if (y == 19) {                     // Separate the group of 3 (assuming this is the mantissa).
+            printf(" %d", bit_array[y]);
         }
+        else {                                          // This part is either the rest of the mantissa or the exponent.
+            printf("%d", bit_array[y]);
 
-        // But, what if we removed the only zero?
-        // We better add that back in. (we shouldn't get here unless the entire char array was filled with 0's.)
-        if (x == 0) {
-            bit_array[31] = '0';
-        }
-    }
-
-    // Reverse the order of the bit array.
-    for (x = 31; x >= 0; x--) {
-
-        // HACK: don't print out spaces!
-        if (bit_array[x] != ' ') {
-            printf("%c", bit_array[x]);
-
-            // This is to group the bits in groups of 4, like the example does.
-            if (count == 4) {
+            if(count == 4) {                     // Catch groups of 4 by counting to 4.
                 printf(" ");
                 count = 0;
             }
@@ -136,6 +123,5 @@ void output_binary(int integer_input) {
         }
     }
 
-    printf("\n");
     return;
 }
