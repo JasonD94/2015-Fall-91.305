@@ -1,12 +1,6 @@
 CC = gcc
 CFLAGS	 = -o -Werror -Wextra -Wall
 
-# Run ./a1 < test.in to run the test file.
-# Run ./a1 < test.in > standard_output.out to run the test file while redirecting to a file named standard_output.out
-
-# This site was helpful:
-# http://www.cs.toronto.edu/~penny/teaching/csc444-05f/maketutorial.html
-
 all:
 	# Compile the program.
 	$(CC) $(CFLAGS) a1.c -o a1
@@ -15,8 +9,8 @@ all:
 	./a1 < test.in > standard_output.out
 
 	# Compare standard_output.out against test.out
-	# I decided to ignore white space and only test that the answers were valid (-w).
-	# So if something doesn't "quite" line up I won't catch that
+	# I decided to ignore white space and only test that the answers were valid (the -w option).
+	# So if something doesn't "quite" line up I won't catch that.
 	# But that's fine. The answer is still correct and I don't have to fight with the test.out file.
 	diff  -w standard_output.out test.out
 
