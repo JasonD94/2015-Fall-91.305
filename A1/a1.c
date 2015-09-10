@@ -34,20 +34,21 @@ void output_binary(int integer_input, int bits);
 int main() {
 
     float input;
-    int valid = 0;
+    int valid = 1;
 
-    // Get input until we find a newline ('\n')
+    // Get input until input stops.
     do {
-        //printf("Enter a float(s): ");
+        printf("Enter a float followed by a newline: ");
         valid = scanf(" %f", &input);
+        getchar();      // Eat newline.
+
+        print_output(input);
 
         // Make sure the user didn't enter invalid input.
         // scanf will return 0 if it gets invalid input and -1 on EOF.
         if (valid == 0 || valid == -1) {
             break;
         }
-
-        print_output(input);
 
     // scanf will return 1 if it gets a valid input, 0 if it gets invalid input and -1 on EOF.
     } while (valid == 1);
@@ -56,7 +57,6 @@ int main() {
 }
 
 
-//  TODO: check output and compare.
 void print_output(float output) {
 
     float_32.float_value = output;              // Use the union to print out the mantissa / exponent / sign.
@@ -67,7 +67,7 @@ void print_output(float output) {
             https://stackoverflow.com/questions/1809399/c-how-to-justify-output-lines-using-printf-to-get-equal-length
     */
 
-    printf("The floating point value for %.1f is broken out as: \n", output);
+    printf("\nThe floating point value for %.1f is broken out as: \n", output);
 
     // Mantissa
     printf("%12s 0x%-8x %20s %11s", "mantissa:", float_32.part.mantissa, "or: ", " ");
