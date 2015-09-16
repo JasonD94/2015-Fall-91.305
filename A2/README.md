@@ -15,3 +15,8 @@ Hardware: 35.750000
 Emulated: 35.750000
           bits: 0 1000 0100 000 1111 0000 0000 0000 0000
  ```
+
+ #TODO
+ 1. Test output
+ 2. Fix "inf" on last given test input
+ 3. Find more input numbers to test against.

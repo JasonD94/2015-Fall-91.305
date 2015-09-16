@@ -67,3 +67,4 @@ The floating point value for 1.0 is broken out as:
        sign: 0                          or: 0
  in base 10: 1.000000
                                         or: 0 0111 1111  00000000000000000000000
+

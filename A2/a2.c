@@ -25,7 +25,7 @@ union float_32 {
 
 
 // Function to convert the input into readable output.
-void print_output(float output);
+void print_output(float output, int num);
 
 // Function to output to binary.
 void output_binary(int integer_input, int bits);
@@ -33,20 +33,36 @@ void output_binary(int integer_input, int bits);
 
 int main() {
 
-    float input;
+    float float1, float2, sum;
     int valid = 1;
 
     // Get input until input stops.
     do {
-        valid = scanf("%f", &input);
+        // Float 1
+        valid = scanf("%f", &float1);
 
-        // Make sure the user didn't enter invalid input.
-        // scanf will return 0 if it gets invalid input and -1 on EOF.
-        if (valid == 0 || valid == -1) {
+        if (valid == 0 || valid == -1) {             // scanf will return 0 if it gets invalid input and -1 on EOF.
             break;
         }
 
-        print_output(input);
+        print_output(float1, 1);
+
+        // Float 2
+        valid = scanf("%f", &float2);
+
+        if (valid == 0 || valid == -1) {            // scanf will return 0 if it gets invalid input and -1 on EOF.
+            break;
+        }
+
+        print_output(float2, 2);
+
+        sum = float1 + float2;
+
+        // Output the "Hardware" section
+        print_output(sum, 3);
+
+        // Output the "Emulated" section
+        print_output(sum, 4);
 
     // scanf will return 1 if it gets a valid input, 0 if it gets invalid input and -1 on EOF.
     } while (valid == 1);
@@ -55,35 +71,45 @@ int main() {
 }
 
 
-void print_output(float output) {
+void print_output(float output, int num) {
 
     float_32.float_value = output;              // Use the union to print out the mantissa / exponent / sign.
 
-    /*
-            Note - I decided to line the lines up correctly, so I found an easier way to do so using Stackoverflow.
-            (although I'm aligning both right and left at spots, depending how I want the output to look exactly.)
-            https://stackoverflow.com/questions/1809399/c-how-to-justify-output-lines-using-printf-to-get-equal-length
-    */
+    // Float 1 / Float 2 output
+    if(num == 1 || num == 2) {
+        printf(" Float %d: %.6f\n", num, output);
+        printf("          bits: ");
 
-    printf("The floating point value for %.1f is broken out as: \n", output);
+        // Binary output
+        printf("%x ", float_32.part.sign);
+        output_binary(float_32.part.exponent, 8);
+        output_binary(float_32.part.mantissa, 23);
+        printf("\n");
+    }
 
-    // Mantissa
-    printf("%12s 0x%-8x %20s %11s", "mantissa:", float_32.part.mantissa, "or: ", " ");
-    output_binary(float_32.part.mantissa, 23);
+    // Hardware output section
+    else if(num == 3) {
+        printf("Hardware: %.6f\n", output);
+        printf("          bits: ");
 
-    // Exponent
-    printf("\n%12s 0x%-8x %20s %1s", "exponent:", float_32.part.exponent, "or: ", " ");
-    output_binary(float_32.part.exponent, 8);
+        // Binary output
+        printf("%x ", float_32.part.sign);
+        output_binary(float_32.part.exponent, 8);
+        output_binary(float_32.part.mantissa, 23);
+        printf("\n");
+    }
 
-    // Sign
-    printf("\n%12s %-10x %19s %x\n", "sign:", float_32.part.sign, "or:", float_32.part.sign);
+    // Emulated output section
+    else if(num == 4) {
+        printf("Emulated: %.6f\n", output);
+        printf("          bits: ");
 
-    // In base 10
-    printf("%12s %-10f ", "in base 10:", output);
-    printf("\n%43s %x ", "or:", float_32.part.sign);
-    output_binary(float_32.part.exponent, 8);
-    output_binary(float_32.part.mantissa, 23);
-    printf("\n\n");
+        // Binary output
+        printf("%x ", float_32.part.sign);
+        output_binary(float_32.part.exponent, 8);
+        output_binary(float_32.part.mantissa, 23);
+        printf("\n\n");
+    }
 
     return;
 }

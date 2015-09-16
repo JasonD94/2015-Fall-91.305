@@ -30,6 +30,7 @@
 # Debug files
 *.dSYM/
 
-# Assignment 1 stuff
+# Assignment 1/2 stuff
 a1
 standard_output.out
+a2
