@@ -5,11 +5,12 @@ all:
 	# Compile the program.
 	$(CC) $(CFLAGS) a2.c -o a2
 
-	# Run the program using the test.in file, and redirect to a file named standard_output.out
+	# Run the program using the test.in file, and redirect to a file named output
 	./a2 < test.in > output
 
-	# Compare standard_output.out against test.out
-	diff  -c output test.out
+	# Compare the output of my program (output) against the expected output (test.out)
+	# Piping through cat with -vet to get whitespace / newlines to be noted.
+	diff  -c output test.out | cat -vet
 
 clean:
 	# Remove the executable / standard output file.

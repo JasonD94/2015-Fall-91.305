@@ -108,7 +108,7 @@ void print_output(float output, int num) {
         printf("%x ", float_32.part.sign);
         output_binary(float_32.part.exponent, 8);
         output_binary(float_32.part.mantissa, 23);
-        printf("\n\n");
+        printf("\n");
     }
 
     return;
@@ -163,7 +163,9 @@ void output_binary(int integer_input, int bits) {
             else {                                                 // This part is either the rest of the mantissa.
                 printf("%d", bit_array[y]);
 
-                if(count == 4) {                            // Catch groups of 4 by counting to 4.
+                // Prevent trailing whitespace by catching when y == 0.
+                // This messed up my diff command.
+                if( (count == 4) &&  (y != 0) ) {                            // Catch groups of 4 by counting to 4.
                     printf(" ");
                     count = 0;
                 }
