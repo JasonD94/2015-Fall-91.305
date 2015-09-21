@@ -30,10 +30,13 @@ void print_output(float output, int num);
 // Function to output to binary.
 void output_binary(int integer_input, int bits);
 
+// Function to add two floating point numbers using integer addition.
+float add_floating_point(float first_int, float second_int);
+
 
 int main() {
 
-    float float1, float2, sum;
+    float float1, float2, hardware, emulated;
     int valid = 1;
 
     // Get input until input stops.
@@ -56,13 +59,13 @@ int main() {
 
         print_output(float2, 2);
 
-        sum = float1 + float2;
-
         // Output the "Hardware" section
-        print_output(sum, 3);
+        hardware = float1 + float2;
+        print_output(hardware, 3);
 
         // Output the "Emulated" section
-        print_output(sum, 4);
+        emulated = add_floating_point(float1, float2);
+        print_output(emulated, 4);
 
     // scanf will return 1 if it gets a valid input, 0 if it gets invalid input and -1 on EOF.
     } while (valid == 1);
@@ -71,6 +74,7 @@ int main() {
 }
 
 
+// Function to convert the input into readable output.
 void print_output(float output, int num) {
 
     float_32.float_value = output;              // Use the union to print out the mantissa / exponent / sign.
@@ -176,4 +180,83 @@ void output_binary(int integer_input, int bits) {
     }
 
     return;
+}
+
+
+// Function to add two floating point numbers using integer addition.
+float add_floating_point(float first_int, float second_int) {
+
+    int first_man = 0, second_man = 0, first_exp = 0, second_exp = 0, first_sign = 0, second_sign = 0;
+    int sum = 0;
+
+    // Get the first float into its separate parts
+    float_32.float_value = first_int;
+    first_man = float_32.part.mantissa;
+    first_exp = float_32.part.exponent;
+    first_sign = float_32.part.sign;
+
+    // Get the second float into its separate parts
+    float_32.float_value = second_int;
+    second_man = float_32.part.mantissa;
+    second_exp = float_32.part.exponent;
+    second_sign = float_32.part.sign;
+
+    // let's output all this for debugging.
+    //printf("\nFirst float: %d %d %d\n", first_man, first_exp, first_sign);
+    //printf("\nSecond float: %d %d %d\n", second_man, second_exp, second_sign);
+
+    /*
+        Here’s some advice about how to do this:
+
+        First, copy the mantissa values and expose the hidden bits so
+        you have a 24-bit value rather than a 23-bit value.
+
+        Second, shift the mantissa of the smaller value while
+        decrementing the exponent until the exponents are equal.
+
+        Third, add the mantissa values.
+
+        Fourth, construct a new emulated float with the added mantissa and the common exponent.
+
+        These first four steps are just a matter of C bit-twiddling. The hard part will come from dealing
+        properly with removing the hidden bit, dealing with carrying during addition, and ensuring that
+        you shift values correctly.
+    */
+
+    // Adjust the second float
+    if (first_exp < second_exp) {
+        // Get the second exponent to equal the first.
+        // Do this by left shifting the second float's mantissa by 1 until the exponent's are equal.
+        while (second_exp != first_exp) {
+            second_man << 1;
+            second_exp--;
+        }
+    }
+    // Adjust the first float
+    else if (first_exp > second_exp) {
+        // Get the first exponent to equal the second.
+        // Do this by left shifting the first float's mantissa by 1 until the exponent's are equal.
+        while (first_exp != second_exp) {
+            first_man << 1;
+            first_exp--;
+        }
+    }
+    else {
+        // They are already equal so we don't need to do anything here.
+    }
+
+    // Now we can add the mantissa's. Don't forget the hidden bit.
+    sum = first_man + second_man;
+
+    // And then we can construct a new emulated float and return that.
+    float_32.part.mantissa = sum;                 // The sum of the two mantissas.
+    float_32.part.exponent = first_exp;         // These should be the same so it doesn't matter which one we use.
+    float_32.part.sign = 1;                              // Assume 1 for now.
+
+    // let's output all this for debugging.
+    //printf("\nFirst float: %d %d %d\n", first_man, first_exp, first_sign);
+    //printf("\nSecond float: %d %d %d\n", second_man, second_exp, second_sign);
+
+    // Return the final float value.
+    return float_32.float_value;
 }
