@@ -1,5 +1,5 @@
- DIY Floating Point Addition
- ================
+DIY Floating Point Addition
+===========================
 This program will read two 32 bit floating point numbers from standard input
 and it will add them together using C's integer operations.
 

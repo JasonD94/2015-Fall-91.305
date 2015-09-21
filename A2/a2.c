@@ -44,7 +44,7 @@ int main() {
         // Float 1
         valid = scanf("%f", &float1);
 
-        if (valid == 0 || valid == -1) {             // scanf will return 0 if it gets invalid input and -1 on EOF.
+        if (valid == 0 || valid == -1) {            // scanf will return 0 if it gets invalid input and -1 on EOF.
             break;
         }
 
@@ -187,71 +187,73 @@ void output_binary(int integer_input, int bits) {
 float add_floating_point(float first_int, float second_int) {
 
     int first_man = 0, second_man = 0, first_exp = 0, second_exp = 0, first_sign = 0, second_sign = 0;
-    int sum = 0;
+    int sum = 0, count = 0;
 
-    // Get the first float into its separate parts
+    // Split the two floating point numbers into their integer parts, mantissa / exponent / sign
     float_32.float_value = first_int;
-    first_man = float_32.part.mantissa;
+    first_man = float_32.part.mantissa;                 // Split the first float
     first_exp = float_32.part.exponent;
     first_sign = float_32.part.sign;
 
-    // Get the second float into its separate parts
     float_32.float_value = second_int;
-    second_man = float_32.part.mantissa;
+    second_man = float_32.part.mantissa;            // Split the second float
     second_exp = float_32.part.exponent;
     second_sign = float_32.part.sign;
+
+    // First let's check and see if we can add these two numbers without overflowing / underflowing.
 
     // let's output all this for debugging.
     //printf("\nFirst float: %d %d %d\n", first_man, first_exp, first_sign);
     //printf("\nSecond float: %d %d %d\n", second_man, second_exp, second_sign);
 
     /*
-        Here’s some advice about how to do this:
-
-        First, copy the mantissa values and expose the hidden bits so
-        you have a 24-bit value rather than a 23-bit value.
-
-        Second, shift the mantissa of the smaller value while
-        decrementing the exponent until the exponents are equal.
-
-        Third, add the mantissa values.
-
-        Fourth, construct a new emulated float with the added mantissa and the common exponent.
-
-        These first four steps are just a matter of C bit-twiddling. The hard part will come from dealing
-        properly with removing the hidden bit, dealing with carrying during addition, and ensuring that
-        you shift values correctly.
+            Adjust the exponents so that they are equal.
+            We will do this by incrementing the smaller exponent until it is equal to the larger exponent.
+            We also need to adjust the mantissa when we do this, and we adjust right by 1 to do so.
     */
 
-    // Adjust the second float
+    // Adjust the first exponent (and mantissa) since it is smaller.
     if (first_exp < second_exp) {
-        // Get the second exponent to equal the first.
-        // Do this by left shifting the second float's mantissa by 1 until the exponent's are equal.
-        while (second_exp != first_exp) {
-            second_man << 1;
-            second_exp--;
+
+        while (first_exp != second_exp) {
+            first_man = first_man >> 1;                                     // Right shift by 1.
+            first_exp++;
+            count++;
         }
     }
-    // Adjust the first float
-    else if (first_exp > second_exp) {
-        // Get the first exponent to equal the second.
-        // Do this by left shifting the first float's mantissa by 1 until the exponent's are equal.
+
+    // Adjust the second exponent (and mantissa) since it is smaller.
+    if (first_exp > second_exp) {
+
         while (first_exp != second_exp) {
-            first_man << 1;
-            first_exp--;
+            second_man = second_man >> 1;                            // Right shift by 1.
+            second_exp++;
+            count++;
         }
+    }
+
+    /* The two exponents are equal now, so we can move on to adding the mantissas.
+        The bit shift at the end is to add 2 ^ 23 - count, which should add the hidden bit back in.
+        This is because I count how many times I shift , and then add the missing bit back in at
+        that given location.
+        So far this works for the first input. Need to test on more inputs to see if this is valid or not.
+
+        Idea to bit shift to do the pow came from this post:
+       https://stackoverflow.com/questions/7458072/how-to-use-raise-to-the-power-of-x-in-c
+    */
+    sum = first_man + second_man + (1 << (23 - count));
+
+    // Determine the sign of the final floating point number.
+    if (sum > 0) {
+        float_32.part.sign = 0;
     }
     else {
-        // They are already equal so we don't need to do anything here.
+        float_32.part.sign = 1;
     }
 
-    // Now we can add the mantissa's. Don't forget the hidden bit.
-    sum = first_man + second_man;
-
-    // And then we can construct a new emulated float and return that.
+    // Construct the rest of the final floating point number.
     float_32.part.mantissa = sum;                 // The sum of the two mantissas.
     float_32.part.exponent = first_exp;         // These should be the same so it doesn't matter which one we use.
-    float_32.part.sign = 1;                              // Assume 1 for now.
 
     // let's output all this for debugging.
     //printf("\nFirst float: %d %d %d\n", first_man, first_exp, first_sign);
