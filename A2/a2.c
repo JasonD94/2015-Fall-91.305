@@ -186,12 +186,21 @@ void output_binary(int integer_input, int bits) {
 
 // Function to add two floating point numbers using integer addition.
 float add_floating_point(float_32 first_int, float_32 second_int) {
-    int counter = 0;
+    int counter = 0;                // Shift counter
     float_32 float_sum;         // Hold the sum of the two floating point numbers
 
     // No need to adjust since the exponents are the same.
     if (first_int.part.exponent == second_int.part.exponent) {
-        float_sum.part.exponent = first_int.part.exponent;         // Just use the first exponent.
+
+        // Increment the exponents to fix exponent
+        first_int.part.exponent++;
+        second_int.part.exponent++;
+
+        float_sum.part.exponent = first_int.part.exponent;                       // Just use the first exponent.
+
+        // Add the two mantissas together.
+        float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
+        float_sum.part.mantissa >>= 1;      // Right shift once to fix 1.0 + 1.2
     }
 
     // Adjust the first mantissa since it is smaller. The 2nd exponent will be used.
@@ -211,8 +220,14 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             counter--;
         }
 
-        first_int.part.mantissa  >>= counter;                                               // Shift right by the shift amount.
+        if (counter > 0) {
+            first_int.part.mantissa  >>= counter;                                               // Shift right by the shift amount.
+        }
+
         float_sum.part.exponent = second_int.part.exponent;                    // Second exponent was larger so use this one.
+
+        // Add the two mantissas together.
+        float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
     }
 
     // Adjust the second mantissa since it is smaller. The 1st exponent will be used.
@@ -232,12 +247,15 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             counter--;
         }
 
-        second_int.part.mantissa  >>= counter;          // Shift right by the shift amount.
-        float_sum.part.exponent = first_int.part.exponent;                                    // first exponent was larger so use this one.
-    }
+        if (counter > 0) {
+            second_int.part.mantissa  >>= counter;                                                  // Shift right by the shift amount.
+        }
 
-    // Add the two mantissas together.
-    float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
+        float_sum.part.exponent = first_int.part.exponent;                                 // first exponent was larger so use this one.
+
+        // Add the two mantissas together.
+        float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
+    }
 
     return float_sum.float_value;                // Return the final float value.
 }
