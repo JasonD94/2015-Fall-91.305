@@ -3,7 +3,7 @@ DIY Floating Point Addition
 This program reads two 32 bit floating point numbers from standard input
 and adds them together using C's integer operations.
 
-The approach I took to completeing this program was to reuse parts of the last
+The approach I took to completing this program was to reuse parts of the last
 program, A1. I reused the int to binary output function, and by doing so
 I just had to make sure I outputted the correct number of spaces / newlines.
 I then added in a chunk of code from the example program, a struct with
