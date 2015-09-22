@@ -10,7 +10,7 @@ all:
 
 	# Compare the output of my program (output) against the expected output (test.out)
 	# Piping (|) through cat with -vet to get whitespace / newlines to show up.
-	diff  -c output test.out | cat -vet
+	diff -c output test.out | cat -vet
 
 clean:
 	# Remove the executable / standard output file.
