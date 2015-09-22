@@ -198,7 +198,7 @@ void output_binary(int integer_input, int bits) {
 // Function to add two floating point numbers using integer addition.
 float add_floating_point(float_32 first_int, float_32 second_int) {
     int counter = 0;          // Shift counter
-    float_32 float_sum;       // Hold the sum of the two floating point numbers
+    float_32 float_sum;
 
     // The exponents are the same, so increment them,
     // and then add the mantissa's together.
@@ -213,7 +213,7 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
 
         // Add the two mantissas together.
         float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
-        float_sum.part.mantissa >>= 1;      // Right shift once to fix 1.0 + 1.2
+        float_sum.part.mantissa >>= 1;    // Right shift once to fix 1.0 + 1.2
     }
 
     // Adjust the 1st mantissa since it is smaller. The 2nd exponent will be used.
@@ -247,7 +247,7 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             // Catch rounding errors - don't drop the last 1. Add it back in.
             if (first_int.bit.b0 == 1) {
                 first_int.part.mantissa >>= 1;
-                first_int.part.mantissa += 1;
+                first_int.part.mantissa += 1;     // Add the dropped 1 back in.
             }
             // If the last bit is a 0 though who cares, just shift it once.
             else {
@@ -258,7 +258,6 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
         // Second exponent was larger so use this one.
         float_sum.part.exponent = second_int.part.exponent;
 
-        // Add the two mantissas together.
         float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
     }
 
@@ -293,7 +292,7 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             // Catch rounding errors - don't drop the last bit if it equals 1.
             if (second_int.bit.b0 == 1) {
                 second_int.part.mantissa >>= 1;
-                second_int.part.mantissa += 1;
+                second_int.part.mantissa += 1;     // Add the dropped 1 back in.
             }
             // If the last bit is a 0 though who cares, just shift it once.
             else {
@@ -304,7 +303,6 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
         // first exponent was larger so use this one.
         float_sum.part.exponent = first_int.part.exponent;
 
-        // Add the two mantissas together.
         float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
     }
 
@@ -314,5 +312,5 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
         float_sum.part.mantissa = 0;
     }
 
-    return float_sum.float_value;     // Return the final float value.
+    return float_sum.float_value;
 }
