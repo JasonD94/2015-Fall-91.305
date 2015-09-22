@@ -32,7 +32,7 @@ typedef union float_32 {
       unsigned  b6 :1;
       unsigned  b7 :1;
       unsigned  b8 :1;
-      unsigned  b9 :1;              // Mantissa
+      unsigned  b9 :1;
       unsigned  b10:1;
       unsigned  b11:1;
       unsigned  b12:1;
@@ -45,7 +45,7 @@ typedef union float_32 {
       unsigned  b19:1;
       unsigned  b20:1;
       unsigned  b21:1;
-      unsigned  b22:1;
+      unsigned  b22:1;            // Mantissa
       unsigned  b23:1;
       unsigned  b24:1;
       unsigned  b25:1;
@@ -189,7 +189,7 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
     int counter = 0;                // Shift counter
     float_32 float_sum;         // Hold the sum of the two floating point numbers
 
-    // No need to adjust since the exponents are the same.
+    // The exponents are the same, so increment them, and then add the mantissa's
     if (first_int.part.exponent == second_int.part.exponent) {
 
         // Increment the exponents to fix exponent
@@ -220,6 +220,11 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             counter--;
         }
 
+        // Don't overshift - max should be 24.
+        if (counter > 24) {
+            counter = 24;
+        }
+
         if (counter > 0) {
             first_int.part.mantissa  >>= counter;                                               // Shift right by the shift amount.
         }
@@ -247,6 +252,11 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
             counter--;
         }
 
+        // Don't overshift - max should be 24.
+        if (counter > 24) {
+            counter = 24;
+        }
+
         if (counter > 0) {
             second_int.part.mantissa  >>= counter;                                                  // Shift right by the shift amount.
         }
@@ -255,6 +265,12 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
 
         // Add the two mantissas together.
         float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
+    }
+
+    // Detect infinity
+    if (first_int.part.exponent == 254 || second_int.part.exponent == 254) {
+        float_sum.part.exponent = 255;
+        float_sum.part.mantissa = 0;
     }
 
     return float_sum.float_value;                // Return the final float value.
