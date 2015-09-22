@@ -17,11 +17,12 @@ point numbers into different unions, and I created the following function:
 
 Inside this function I use a couple of if statements to detect a few cases
 of floating point addition. The exponents are either the same, or different,
-and if they are different one is larger then the other. So I adjust the exponents
-so that they are the same, and to do this I increment the smaller exponent while
-right shifting the smaller exponent's mantissa. This gets the two exponents to
-be the same, and I deal with certain cases like the hidden bit, shifting too
-far right, and rounding being off by 1 with additional if statements.
+and if they are different one is larger then the other. So I adjust the
+exponents so that they are the same, and to do this I increment the smaller
+exponent while right shifting the smaller exponent's mantissa. This gets the
+two exponents to be the same, and I deal with certain cases like the hidden bit,
+shifting too far right, and rounding being off by 1 with additional if
+statements.
 I finally have one other case to detect infinite numbers and if I find this,
 I set the exponent to 255 (1111 1111) and  the mantissa to
 0 (000 0000 0000 0000 0000 0000).
@@ -32,9 +33,9 @@ output of my program (emulated portion) to what the hardware outputted.
 The hardware is basically just printing out the addition of two floating point
 number's using C's standard library.
 
-I learned a fair amount about floating point numbers. For one, they are a pain to
-deal with manually. There are so many random cases to deal with, and a lot of test
-cases were required to make sure the program was outputting correctly.
+I learned a fair amount about floating point numbers. For one, they are a pain
+to deal with manually. There are so many random cases to deal with, and a lot of
+test cases were required to make sure the program was outputting correctly.
 
 I finally feel that this program deserves a .85, as all of my test cases pass
 successfully, and the output of my program matches the hardware output on my
