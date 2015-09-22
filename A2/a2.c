@@ -24,8 +24,8 @@ typedef union float_32 {
         unsigned int     sign:  1;
     } part;
     struct single_bits {
-      unsigned  b0 :1;              // Sign
-      unsigned  b1 :1;              // Exponent
+      unsigned  b0 :1;             // Mantissa
+      unsigned  b1 :1;
       unsigned  b2 :1;
       unsigned  b3 :1;
       unsigned  b4 :1;
@@ -46,8 +46,8 @@ typedef union float_32 {
       unsigned  b19:1;
       unsigned  b20:1;
       unsigned  b21:1;
-      unsigned  b22:1;              // Mantissa
-      unsigned  b23:1;
+      unsigned  b22:1;
+      unsigned  b23:1;              // Exponent
       unsigned  b24:1;
       unsigned  b25:1;
       unsigned  b26:1;
@@ -55,7 +55,7 @@ typedef union float_32 {
       unsigned  b28:1;
       unsigned  b29:1;
       unsigned  b30:1;
-      unsigned  b31:1;
+      unsigned  b31:1;              // Sign
     } bit;
 } float_32;
 
@@ -216,7 +216,7 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
         float_sum.part.mantissa >>= 1;      // Right shift once to fix 1.0 + 1.2
     }
 
-    // Adjust the first mantissa since it is smaller. The 2nd exponent will be used.
+    // Adjust the 1st mantissa since it is smaller. The 2nd exponent will be used.
     else if (first_int.part.exponent < second_int.part.exponent) {
 
         // Get the amount to shift by. Only shift to the right.
@@ -240,7 +240,19 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
 
         // Shift right by the shift amount.
         if (counter > 0) {
-            first_int.part.mantissa  >>= counter;
+
+            // Shift one less then necessary so we can catch rounding errors.
+            first_int.part.mantissa  >>= counter - 1;
+
+            // Catch rounding errors - don't drop the last 1. Add it back in.
+            if (first_int.bit.b0 == 1) {
+                first_int.part.mantissa >>= 1;
+                first_int.part.mantissa += 1;
+            }
+            // If the last bit is a 0 though who cares, just shift it once.
+            else {
+                first_int.part.mantissa  >>= 1;
+            }
         }
 
         // Second exponent was larger so use this one.
@@ -250,14 +262,14 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
         float_sum.part.mantissa = first_int.part.mantissa + second_int.part.mantissa;
     }
 
-    // Adjust the second mantissa since it is smaller. The 1st exponent will be used.
+    // Adjust the 2nd mantissa since it is smaller. The 1st exponent will be used.
     else if (first_int.part.exponent > second_int.part.exponent) {
 
         // Get the amount to shift by. Only shift to the right.
         counter = first_int.part.exponent - second_int.part.exponent;
 
         // Right shift once, then put the hidden bit in that spot.
-        second_int.part.mantissa  >>= 1;        // Short hand for val = val >> 1
+        second_int.part.mantissa  >>= 1;       // Short hand for val = val >> 1
 
         // Put the hidden bit in place of the zero we just shifted in.
         second_int.bit.b22 = 1;
@@ -274,7 +286,19 @@ float add_floating_point(float_32 first_int, float_32 second_int) {
 
         // Shift right by the shift amount.
         if (counter > 0) {
-            second_int.part.mantissa  >>= counter;
+
+            // Shift one less than necessary so we can catch rounding errors.
+            second_int.part.mantissa  >>= counter - 1;
+
+            // Catch rounding errors - don't drop the last bit if it equals 1.
+            if (second_int.bit.b0 == 1) {
+                second_int.part.mantissa >>= 1;
+                second_int.part.mantissa += 1;
+            }
+            // If the last bit is a 0 though who cares, just shift it once.
+            else {
+                second_int.part.mantissa >>= 1;
+            }
         }
 
         // first exponent was larger so use this one.

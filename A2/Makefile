@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS	 = -o -Werror -Wextra -Wall
+CFLAGS = -o -Werror -Wextra -Wall
 
 all:
 	# Compile the program.
@@ -9,7 +9,7 @@ all:
 	./a2 < test.in > output
 
 	# Compare the output of my program (output) against the expected output (test.out)
-	# Piping through cat with -vet to get whitespace / newlines to be noted.
+	# Piping through cat with -vet to get whitespace / newlines to show up.
 	diff  -c output test.out | cat -vet
 
 clean:
