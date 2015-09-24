@@ -1,52 +1,31 @@
-/*
- * Copyright 2015 Jason Downing
+/* Copyright 2015 Jason Downing
  * All rights reserved.
- * MIT Licensed - see http://opensource.org/licenses/MIT for details.
- *
- */
-
+ * MIT Licensed - see http://opensource.org/licenses/MIT for details.    */
 #include <stdio.h>
 
-int find_fibonacci(int n);
+int find_fibonacci(int n) {
+    int Fn = 0, Fn1 = 0, Fn2 = 1;
+
+    while (n >= 0) {        // While N is not negative
+        Fn = Fn1 + Fn2;
+        Fn2 = Fn1;          // Fibonacci formula:
+        Fn1 = Fn;           // Fn = Fn-1 + Fn-2
+        n--;
+    }
+
+    return Fn;              // Fibonacci number for int n
+}
 
 int main() {
-    int count = 0;
+    int count = 25;         // We count down from 25 to 0, MIC1 supports this.
+    int N = 0;              // N is the given Fibonacci number.
 
     printf("First 25 Fibonacci numbers: \n\n");
 
-    while(count <= 25) {
-        printf("Fib #%d = %d\n", count, find_fibonacci(count));
-        count++;
-    }
-
-    return 0;
-}
-
-// Given an int N, this function returns the given fibonacci number.
-int find_fibonacci(int n) {
-    int fib = 0, fib1 = 0, fib2 = 1, count = 0;
-
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return 1;
-    }
-    else if (n > 1) {
-
-        while (count < n) {
-            /*
-                Formula is:
-                Fn = Fn-1 + Fn-2
-                Fib is Fn. Fib1 is Fn-1. Fib2 is Fn-2.
-            */
-            fib = fib1 + fib2;
-            fib2 = fib1;            // First update fib2 so we don't lose fib1.
-            fib1 = fib;             // We can then update fib1.
-            count++;
-        }
-
-        return fib;     // We've got the fibonacci number that we want.
+    while(count >= 0) {
+        printf("Fib #%d = %d\n", N, find_fibonacci(N));
+        count--;
+        N++;
     }
 
     return 0;
