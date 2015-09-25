@@ -7,3 +7,7 @@ and stores them into memory. You must provide a function that can receive as an 
 number between 0 and 25 and return its Fibonacci number. You could use this function to populate
 the table. Since you can’t yet print anything on the MIC1, you’ll have to end with a HALT instruction
 and use the debugger to show that the program worked correctly."
+
+Currently a C version of the program exists.
+
+TODO: write MIC-1 assembly that does the same thing.
