@@ -12,7 +12,7 @@ main:   lodd count:  ;load AC with value at count
         call fibn:   ;fibonacci loop
 fibn:   lodd tempn:  ;load Fibonacci # to calculate.
         jneg add1:   ;when tempn is less than 0 we can jump to add1
-        lodd fn:     ;load the current fib #
+        lodd zero:   ;BUG HERE, LOAD ZERO NOT FIB #. (i'm such a moron.)
         addd fn1:    ;Add fn1 to AC
         addd fn2:    ;Add fn2 to AC
         stod fn:     ;Store fib #
