@@ -1,36 +1,46 @@
-start:  call main:   ;push return address on stack
+start:  call main:   ;go to main
         halt         ;enter debugger
 main:   lodd count:  ;load AC with value at count
-        jzer done:   ;if count is less than 0 we are done.
-        halt         ;enter debugger after each Fibonacci number.
+        jneg done:   ;if count is less than 0 we are done.
+        lodd zero:   ;load 0 into AC
+        stod fn:     ;make fn start at 0.
+        stod fn1:    ;make fn1 start at 0.
+        lodd one1:   ;load one into AC
+        stod fn2:    ;make fn2 start at 1.
+        lodd n:      ;load Fibonacci # to calculate.
+        stod tempn:  ;store fibonacci # in tempn counter.
         call fibn:   ;fibonacci loop
-fibn:   lodd n:      ;load Fibonacci # to calculate.
-        jzer add1:   ;when n is less than 0 we can jump back to the main loop.
-        lodd fib:    ;load the current fib #
+fibn:   lodd tempn:  ;load Fibonacci # to calculate.
+        jneg add1:   ;when tempn is less than 0 we can jump to add1
+        lodd fn:     ;load the current fib #
         addd fn1:    ;Add fn1 to AC
         addd fn2:    ;Add fn2 to AC
-        stod fib:    ;Store fib #
+        stod fn:     ;Store fib #
         lodd fn1:    ;Load fn1
         stod fn2:    ;Store fn1 at fn2
-        lodd fib:    ;Load fib #
+        lodd fn:     ;Load fib #
         stod fn1:    ;Store Fib # at fib
-        lodd n:      ;Load value of n
-        subd one1:   ;Subtract 1 from AC (n)
-        stod n:      ;Store AC (n) in var n.
+        lodd tempn:  ;Load value of tempn
+        subd one1:   ;Subtract 1 from AC (tempn)
+        stod tempn:  ;Store AC (n) in var n.
         jump fibn:   ;Jump to top of fibonacci loop
 add1:   lodd n:      ;load N
         addd one1:   ;add 1 to N
         stod n:      ;store N
-        jump disp:   ;load Fib # into AC
-disp:   lodd fib:    ;^
+        lodd count:  ;load count
+        subd one1:   ;subtract 1 from count.
+        stod count:  ;store count
+        jump disp:   ;go to display Fib # function
+disp:   lodd fn:     ;load Fib # into AC
         halt         ;Call debugger.
-        jump main:   ;back to main.
+        jump main:   ;jump back to main.
 done:   pop          ;come here when all data added, sum in AC
         retn         ;return to caller
         halt         ;should never get here (safety halt)
 count:  25           ;location for running count
-n:      0            ;location for running data pointer
-fib:    0            ;Fibonacci number. Formula: Fn = Fn-1 + Fn-2
+n:      -1           ;location for running data pointer
+tempn:  0            ;temp counter for fibn loop.
+fn:     -1           ;Fibonacci number. Formula: Fn = Fn-1 + Fn-2
 fn1:    0            ;Fn-1
 fn2:    1            ;Fn-2
 zero:   0            ;location of a constant value of 0
