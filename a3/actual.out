@@ -1,0 +1,46 @@
+
+ProgramCounter : 0000000000011101  base 10:      29
+Accumulator    : 1111111111111111  base 10:   65535
+InstructionReg : 1111111111000000  base 10:   65472
+TempInstr      : 1110000000000000  base 10:   57344
+StackPointer   : 0000001111100110  base 10:     998
+ARegister      : 1111111111111110  base 10:   65534
+BRegister      : 0000000000000000  base 10:       0
+CRegister      : 0000000000000000  base 10:       0
+DRegister      : 0000000000000000  base 10:       0
+ERegister      : 0000000000000000  base 10:       0
+FRegister      : 0000000000000000  base 10:       0
+
+Total cycles   : 42650
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1024 has value 1111111111111111 , or 65535  or signed     -1
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type the number of reverse locations to dump:      the location 1023 has value 0010010100010001 , or  9489  or signed   9489
+     the location 1022 has value 1011010100100000 , or 46368  or signed -19168
+     the location 1021 has value 0110111111110001 , or 28657  or signed  28657
+     the location 1020 has value 0100010100101111 , or 17711  or signed  17711
+     the location 1019 has value 0010101011000010 , or 10946  or signed  10946
+     the location 1018 has value 0001101001101101 , or  6765  or signed   6765
+     the location 1017 has value 0001000001010101 , or  4181  or signed   4181
+     the location 1016 has value 0000101000011000 , or  2584  or signed   2584
+     the location 1015 has value 0000011000111101 , or  1597  or signed   1597
+     the location 1014 has value 0000001111011011 , or   987  or signed    987
+     the location 1013 has value 0000001001100010 , or   610  or signed    610
+     the location 1012 has value 0000000101111001 , or   377  or signed    377
+     the location 1011 has value 0000000011101001 , or   233  or signed    233
+     the location 1010 has value 0000000010010000 , or   144  or signed    144
+     the location 1009 has value 0000000001011001 , or    89  or signed     89
+     the location 1008 has value 0000000000110111 , or    55  or signed     55
+     the location 1007 has value 0000000000100010 , or    34  or signed     34
+     the location 1006 has value 0000000000010101 , or    21  or signed     21
+     the location 1005 has value 0000000000001101 , or    13  or signed     13
+     the location 1004 has value 0000000000001000 , or     8  or signed      8
+     the location 1003 has value 0000000000000101 , or     5  or signed      5
+     the location 1002 has value 0000000000000011 , or     3  or signed      3
+     the location 1001 has value 0000000000000010 , or     2  or signed      2
+     the location 1000 has value 0000000000000001 , or     1  or signed      1
+     the location  999 has value 0000000000000001 , or     1  or signed      1
+Type decimal address to view memory,  q  to quit or  c  to continue: MIC-1 emulator finishing, goodbye
+
