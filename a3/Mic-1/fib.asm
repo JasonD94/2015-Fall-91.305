@@ -1,44 +1,44 @@
-main:   lodd count:   ;load AC with value at count
-        jneg done:    ;if count is less than 0 we are done.
+main:   lodd count:   ;load AC with value at count (counting down to 0 from 25)
+        jzer done:    ;if count is less than 0 we are done.
         lodd zero:    ;load 0 into AC
-        stod fn:      ;make fn  start at 0.
-        stod fn1:     ;make fn1 start at 0.
-        lodd one1:    ;load one into AC
-        stod fn2:     ;make fn2 start at 1.
-        lodd n:       ;load Fibonacci # to calculate.
-        stod tempn:   ;store fibonacci # in tempn counter.
-fibn:   lodd tempn:   ;load Fibonacci # to calculate.
-        jneg add1:    ;when tempn is less than 0 we can jump to add1
+        stod fn:      ;make fn (current fib number)  start at 0.
+        stod fn1:     ;make fn-1 start at 0. (seed value 0)
+        lodd one:     ;load one into AC
+        stod fn2:     ;make fn-2 start at 1. (seed value 1)
+        lodd x:       ;load the Fibonacci # we want to calculate.
+        stod fibnum:  ;store fibonacci # in tempn counter.
+        ; This is the fibonacci function.
+        ; fibnum: is the fibonacci number you want to calculate.
+fibn:   lodd fibnum:  ;load Fibonacci # to calculate.
+        jzer add1:    ;when tempn is less than 0 we can jump to add1
         lodd zero:    ;LOAD ZERO NOT FIB #.
         addd fn1:     ;Add fn1 to AC
         addd fn2:     ;Add fn2 to AC
-        stod fn:      ;Store fib #
-        lodd fn1:     ;Load fn1
-        stod fn2:     ;Store fn1 at fn2
-        lodd fn:      ;Load fib #
-        stod fn1:     ;Store Fib # at fib
-        lodd tempn:   ;Load value of tempn
-        subd one1:    ;Subtract 1 from AC (tempn)
-        stod tempn:   ;Store AC (tempn) in var tempn.
+        stod fn:      ;Store fib number
+        lodd fn1:     ;Load fn-1
+        stod fn2:     ;Store fn-1 at fn-2
+        lodd fn:      ;Load fib number
+        stod fn1:     ;Store Fib number at fn-1
+        lodd fibnum:  ;Load value of tempn
+        subd one:     ;Subtract 1 from AC (tempn)
+        stod fibnum:  ;Store AC (tempn) in var tempn.
         jump fibn:    ;Jump to top of fibonacci loop
-add1:   lodd n:       ;load N
-        addd one1:    ;add 1 to N
-        stod n:       ;store N
+add1:   lodd x:       ;load while loop var (x)
+        addd one:     ;add 1 to x
+        stod x:       ;incremented so save x
         lodd count:   ;load count
-        subd one1:    ;subtract 1 from count.
+        subd one:     ;subtract 1 from count.
         stod count:   ;store count
-        jump disp:    ;go to display Fib # function
-disp:   lodd fn:      ;load Fib # into AC
-        halt          ;Call debugger. At this point AC will hold the curr Fib #.
+        lodd fn:      ;load Fib # into AC
+        push          ;push onto stack. should end up starting at location 1023
         jump main:    ;jump back to main.
-done:   pop           ;We get here when all the Fib #s have been calculated.
-        retn          ;return to caller
+done:   retn          ;return to caller
         halt          ;should never get here (safety halt)
-count:  24            ;location for running count
-n:      -1            ;location for running data pointer
-tempn:   0            ;temp counter for fibn loop.
-fn:     -1            ;Fibonacci number. Formula: Fn = Fn-1 + Fn-2
+count:  25            ;location for running count, counts down to -1.
+x:       0            ;
+fibnum:  0            ;The Fibonacci number we want to calculate.
+fn:      0            ;Fibonacci number. Formula: Fn = Fn-1 + Fn-2
 fn1:     0            ;Fn-1
 fn2:     1            ;Fn-2
 zero:    0            ;location of a constant value of 0
-one1:    1            ;location of a constant value of 1
+one:     1            ;location of a constant value of 1
