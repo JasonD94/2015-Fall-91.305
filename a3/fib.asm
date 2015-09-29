@@ -7,6 +7,7 @@ main:   lodd count:    ;Load AC with value at count (counting down to -1 from 24
         stod fn1:      ;Make fn-1 start at 0. (seed value 0)
         lodd one:      ;Load one into AC
         stod fn2:      ;Make fn-2 start at 1. (seed value 1)
+
         ;Function to calculate the fibonacci number for N, where N is fibnum.
 fibn:   lodd fibnum:   ;Load Fibonacci number to calculate.
         jzer nextn:    ;When fibnum equals 0 we can load up the next number.
@@ -21,6 +22,7 @@ fibn:   lodd fibnum:   ;Load Fibonacci number to calculate.
         subd one:      ;Subtract 1 from AC (which is fibnum)
         stod fibnum:   ;Store AC (fibnum) into var fibnum.
         jump fibn:     ;Jump to top of fibonacci loop (keep jumping til fibnum == 0)
+
         ;This function decrements the count and pushes the fibonacci number onto the stack.
 nextn:  lodd count:    ;Load count into AC
         subd one:      ;Subtract 1 from count.
@@ -28,8 +30,11 @@ nextn:  lodd count:    ;Load count into AC
         lodd fn:       ;Load the Fibonacci number into AC
         push           ;Push onto stack. This should start at mem location 1023.
         jump main:     ;Jump back to main, to get the next fibonacci number.
+
         ;We are done at this point.
 done:   halt           ;We are done, so halt and don't catch fire.
+
+        ;Variables start here
 count:   24            ;Location for running count, counts down to 0.
 fibnum:   0            ;The Fibonacci number we want to calculate. (decrements down to 0)
 fn:       0            ;This is Fn in the formula: Fn = Fn-1 + Fn-2

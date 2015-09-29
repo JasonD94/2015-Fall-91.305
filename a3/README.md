@@ -21,12 +21,15 @@ can then print out the next 24 Fibonacci numbers (1 1 2 3 5 etc). Technically I
 calculate the Fibonacci numbers in versus order since I start at 25 and work
 my way down to zero. I don't believe that is a problem though since when you
 enter the debugger it starts at the first Fibonacci number, since that one
-was the last number pushed to the stack. I did have some issues with the Makefile
-and trying to get the test.out to match the program's actual output. It seems
-that when redirecting input using the "<" operator whatever was inputed is not
-outputted to the screen, and as a result it doesn't get redirected to the file
-actual.out (using the ">" operator). I had to modify what I thought the program
-would output to match what it actuall outputs when running the following command:
+was the last number pushed to the stack. It is also the easiest way I could think
+of doing in MIC-1 since you can only jump if zero, negative, positive or not equal
+to zero.
+I did have some issues with the Makefile and trying to get the test.out to match
+the program's actual output. It seems that when redirecting input using the "<"
+operator whatever was inputed is not outputted to the screen, and as a result it
+doesn't get redirected to the file actual.out (using the ">" operator).
+I had to modify what I thought the program would output to match what it actually
+outputs when running the following command:
 
 ```
 	./mic1 prom.dat fib.obj 0 1024 < test.in > actual.out || true
@@ -39,4 +42,4 @@ instructions quickly.
 
 I feel since the program outputs the first 25 Fibonacci numbers to the stack,
 and that I use a recursive function to calculate out each Fibonacci number
-that I deserve a .87 for this work.
+that I deserve a .9011 for this work.
