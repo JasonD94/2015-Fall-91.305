@@ -17,7 +17,7 @@ int find_fibonacci(int n) {
 }
 
 int main() {
-    int count = 25;         // We count down from 25 to 0, MIC1 supports this.
+    int count = 24;         // We count down from 25 to 0, MIC1 supports this.
     int N = 0;              // N is the given Fibonacci number.
 
     printf("First 25 Fibonacci numbers: \n\n");
