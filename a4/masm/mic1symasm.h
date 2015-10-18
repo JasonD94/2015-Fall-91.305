@@ -27,3 +27,6 @@
 #define LABEL  27
 #define LOC    28
 #define STR    29
+#define DIV    30
+#define MULT   31
+#define RSHIFT 32

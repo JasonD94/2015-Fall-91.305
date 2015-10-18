@@ -3,10 +3,10 @@
 For this assignment, we will be writing new MIC-1 opcodes. The following codes
 will be written (HALT will be changed):
 
-- MULT - 1111111 1 00 mmmmmm
+- MULT   - 1111111 1 00 mmmmmm
 - RSHIFT - 1111111 1 01 ??ssss
-- DIV - 1111111 1 10 ??????
-- HALT - 1111111 1 11 ??????
+- DIV    - 1111111 1 10 ??????
+- HALT   - 1111111 1 11 ??????
 
 We should use the three example programs as tests for the new instructions.
 
