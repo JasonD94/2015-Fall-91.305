@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>       // Added this in to remove "implicit declaration" warning
 
 #include "mic1symasm.h"
 
