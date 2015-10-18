@@ -349,6 +349,22 @@ int main(int argc, char *argv[]) {
       } while (*(yytext+i++) != '\"' && ++pc);
       break;
 
+      /* Three additional cases added here */
+      case DIV:
+        // This is just temp
+        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+      break;
+
+      case MULT:
+        // This is just temp
+        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+      break;
+
+      case RSHIFT:
+        // This is just temp
+        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+      break;
+
     case JUNK:
       fprintf(stderr,"Unrecognized token is %s\n",yytext);
       exit(26);
@@ -359,23 +375,23 @@ int main(int argc, char *argv[]) {
     }
     pc++;
   }
-  
+
   if (object_file) {
     print_first_pass(NO_HEADERS);
     append_table();
     return 0;
   }
-  
+
   if(linum){
     print_first_pass(HEADERS);
   }
-  
+
   generate_code(linum);
-  
+
   if (dump_tab) {
     dump_table();
   }
- 
+
   return 0;
 }
 
@@ -490,7 +506,7 @@ void update_sym_table(char *symbol) {
 
 void search_sym_table(char *symbol) {
   for (struct nament *list = symtab; list; list = list->next) {
-    if (strcmp(list->name, symbol) == 0) {      
+    if (strcmp(list->name, symbol) == 0) {
       return;
     }
   }
