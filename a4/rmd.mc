@@ -78,32 +78,32 @@
 77:a := band(ir, smask);                            { 11111110 = DESP }
 78:a := inv(a);
 79:a := a + 1; goto 75;
-80:tir := tir + tir; if n then goto 150;            { if 1111 1111 1x goto line 150 }
-81:alu := tir + tir; if n then goto 130;            { else if 1111 1111 01 goto line 130 }
-81: goto 0;                                         { else 1111 1111 00 = MULT }
-82: goto 0;                                         { MULT is not currently implemented }
-83: goto 0;
-84: goto 0;
-85: goto 0;
-86: goto 0;
-87: goto 0;
-88: goto 0;
-89: goto 0;
-90: goto 0;
-91: goto 0;
-92: goto 0;
-93: goto 0;
-94: goto 0;
-95: goto 0;
-96: goto 0;
-97: goto 0;
-98: goto 0;
-99: goto 0;
-100: goto 0;
-101: goto 0;
-102: goto 0;
-103: goto 0;
-104: goto 0;
+80:tir := tir + tir; if n then goto 150;      { if 1111 1111 1x goto line 150 }
+81:alu := tir + tir; if n then goto 130;      { else if 1111 1111 01 goto line 130 }
+81: a := 0;                                   { else 1111 1111 00 = MULT }
+82: a := lshift(1);                           { get "mmmmmm" value into B }
+83: a := lshift(a + 1);
+84: a := lshift(a + 1);                       { except MULT has 6 bit value instead of 4 bit. }
+85: a := lshift(a + 1);
+86: a := lshift(a + 1);
+87: a := a + 1;
+88: b := band(ir, a);                         { B now holds "mmmmmm" value to mult by.}
+89: mar := sp; rd;                            { need to get the top of the stack now. }
+90: c := mbr;                                 { stack value is now in C }
+91: d := 0;                                   { start result at 0 (D will hold final value) }
+92: alu := b; if z then goto 98;              { if mult. by zero, we're done as D is 0 by default }
+93: d := c + d;                               { add result to stack value. }
+94: alu := c; if n then goto 100;             { check overflow }
+95: alu := d; if n then goto 100;
+96: b := b + (-1); if z then goto 98;         { check to see if we're done adding. }
+97: goto 93;                                  { continue looping }
+98: ac := 0;                                  { MULT was success, so AC = 0 }
+99: mar := sp; mbr := d; wr                   { write result to stack }
+100: ac := -1; goto 0;                        { MULT overflowed, so AC = -1 }
+101: e := inv(d);
+102: e := e + 1;
+103: alu := e; if n then goto 100;            { overflow }
+104: goto 96;                                 { not overflow, continue looping }
 105: goto 0;
 106: goto 0;
 107: goto 0;
