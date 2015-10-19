@@ -80,123 +80,123 @@
 79:a := a + 1; goto 75;
 80:tir := tir + tir; if n then goto 150;      { if 1111 1111 1x goto line 150 }
 81:alu := tir + tir; if n then goto 130;      { else if 1111 1111 01 goto line 130 }
-81: a := 0;                                   { else 1111 1111 00 = MULT }
-82: a := lshift(1);                           { get "mmmmmm" value into B }
-83: a := lshift(a + 1);
-84: a := lshift(a + 1);                       { except MULT has 6 bit value instead of 4 bit. }
-85: a := lshift(a + 1);
-86: a := lshift(a + 1);
-87: a := a + 1;
-88: b := band(ir, a);                         { B now holds "mmmmmm" value to mult by.}
-89: mar := sp; rd;                            { need to get the top of the stack now. }
-90: c := mbr;                                 { stack value is now in C }
-91: d := 0;                                   { start result at 0 (D will hold final value) }
-92: alu := b; if z then goto 98;              { if mult. by zero, we're done as D is 0 by default }
-93: d := c + d;                               { add result to stack value. }
-94: alu := c; if n then goto 100;             { check overflow }
-95: alu := d; if n then goto 100;
-96: b := b + (-1); if z then goto 98;         { check to see if we're done adding. }
-97: goto 93;                                  { continue looping }
-98: ac := 0;                                  { MULT was success, so AC = 0 }
-99: mar := sp; mbr := d; wr                   { write result to stack }
-100: ac := -1; goto 0;                        { MULT overflowed, so AC = -1 }
-101: e := inv(d);
-102: e := e + 1;
-103: alu := e; if n then goto 100;            { overflow }
-104: goto 96;                                 { not overflow, continue looping }
-105: goto 0;
-106: goto 0;
-107: goto 0;
-108: goto 0;
-109: goto 0;
-110: goto 0;
-111: goto 0;
-112: goto 0;
-113: goto 0;
-114: goto 0;
-115: goto 0;
-116: goto 0;
-117: goto 0;
-118: goto 0;
-119: goto 0;
-120: goto 0;
-121: goto 0;
-122: goto 0;
-123: goto 0;
-124: goto 0;
-125: goto 0;
-126: goto 0;
-127: goto 0;
-128: goto 0;
-129: goto 0;
-130: a := lshift(1);                                  { 1111 1111 01 = RSHIFT }
-131: a := lshift(a + 1);                              { this is from Prof. Maloney's help directory }
-132: a := lshift(a + 1);  { URL: cs.uml.edu/~bill/cs305/assignment_4_help_dir/promfile_nand_rshift.txt }
-133: a := a + 1;
-134: b := band(ir, a);
-135: b := b + (-1); if n then goto 0;
-136: ac := rshift(ac); goto 135;
-137: goto 0;
-138: goto 0;
-139: goto 0;
-140: goto 0;
-141: goto 0;
-142: goto 0;
-143: goto 0;
-144: goto 0;
-145: goto 0;
-146: goto 0;
-147: goto 0;
-148: goto 0;
-149: goto 0;
-150: alu := tir + tir; if n then goto 200;            { if 1111 1111 11 goto line 200 }
-151: goto 0;                                          { else 1111 1111 10 = DIV }
-152: goto 0;                                          { DIV is not currently implemented }
-153: goto 0;
-154: goto 0;
-155: goto 0;
-156: goto 0;
-157: goto 0;
-158: goto 0;
-159: goto 0;
-160: goto 0;
-161: goto 0;
-162: goto 0;
-163: goto 0;
-164: goto 0;
-165: goto 0;
-166: goto 0;
-167: goto 0;
-168: goto 0;
-169: goto 0;
-170: goto 0;
-171: goto 0;
-172: goto 0;
-173: goto 0;
-174: goto 0;
-175: goto 0;
-176: goto 0;
-177: goto 0;
-178: goto 0;
-179: goto 0;
-180: goto 0;
-181: goto 0;
-182: goto 0;
-183: goto 0;
-184: goto 0;
-185: goto 0;
-186: goto 0;
-187: goto 0;
-188: goto 0;
-189: goto 0;
-190: goto 0;
-191: goto 0;
-192: goto 0;
-193: goto 0;
-194: goto 0;
-195: goto 0;
-196: goto 0;
-197: goto 0;
-198: goto 0;
-199: goto 0;
-200: rd; wr;                                          { 1111 1111 11 = HALT }
+81:a := 0;                                  	{ else 1111 1111 00 = MULT }
+82:a := lshift(1);                          	{ get "mmmmmm" value into B }
+83:a := lshift(a + 1);						  					{ to do this we make a 6 bit mask }
+84:a := lshift(a + 1);												{ this is similar to rshift }
+85:a := lshift(a + 1);												{ except MULT has 6 bit value instead of 4 bit. }
+86:a := lshift(a + 1);
+87:a := a + 1;
+88:b := band(ir, a);                        	{ B now holds "mmmmmm" value to mult by.}
+89:mar := sp; rd;                           	{ need to get the top of the stack now. }
+90:rd;										  									{ need to read twice }
+91:c := mbr;                                	{ stack value is now in C }
+92:d := 0;                                  	{ start result at 0 (D will hold final value) }
+93:alu := b; if z then goto 99;             	{ if mult. by zero, we're done as D is 0 by default }
+94:d := c + d;                              	{ add result to stack value. (multiplication is just addition) }
+95:alu := c; if n then goto 102;            	{ check overflow }
+96:alu := d; if n then goto 105;			  			{ check overflow }
+97:b := b + (-1); if z then goto 99;        	{ check to see if we're done adding. }
+98:goto 94;                                 	{ continue looping }
+99:ac := 0;                          					{ MULT was success }
+100:mar := sp; mbr := d; wr;                	{ write result to stack }
+101:wr; goto 0;																{ we can return to beginning of main }
+102:goto 0;
+103:goto 0;
+104:alu := a; if n then goto 106;            	{ overflow }
+105:goto 97;            					  					{ wasn't overflow so continue looping }
+106:ac := -1; goto 0;                       	{ MULT overflowed, so AC = -1 }
+107:goto 0;
+108:goto 0;
+109:goto 0;
+110:goto 0;
+111:goto 0;
+112:goto 0;
+113:goto 0;
+114:goto 0;
+115:goto 0;
+116:goto 0;
+117:goto 0;
+118:goto 0;
+119:goto 0;
+120:goto 0;
+121:goto 0;
+122:goto 0;
+123:goto 0;
+124:goto 0;
+125:goto 0;
+126:goto 0;
+127:goto 0;
+128:goto 0;
+129:goto 0;
+130:a := lshift(1);                                  { 1111 1111 01 = RSHIFT }
+131:a := lshift(a + 1);                              { this is from Prof. Moloney's help directory }
+132:a := lshift(a + 1);  { URL: cs.uml.edu/~bill/cs305/assignment_4_help_dir/promfile_nand_rshift.txt }
+133:a := a + 1;
+134:b := band(ir, a);
+135:b := b + (-1); if n then goto 0;
+136:ac := rshift(ac); goto 135;
+137:goto 0;
+138:goto 0;
+139:goto 0;
+140:goto 0;
+141:goto 0;
+142:goto 0;
+143:goto 0;
+144:goto 0;
+145:goto 0;
+146:goto 0;
+147:goto 0;
+148:goto 0;
+149:goto 0;
+150:alu := tir + tir; if n then goto 200;            { if 1111 1111 11 goto line 200 }
+151:goto 0;                                          { else 1111 1111 10 = DIV }
+152:goto 0;                                          { DIV is not currently implemented }
+153:goto 0;
+154:goto 0;
+155:goto 0;
+156:goto 0;
+157:goto 0;
+158:goto 0;
+159:goto 0;
+160:goto 0;
+161:goto 0;
+162:goto 0;
+163:goto 0;
+164:goto 0;
+165:goto 0;
+166:goto 0;
+167:goto 0;
+168:goto 0;
+169:goto 0;
+170:goto 0;
+171:goto 0;
+172:goto 0;
+173:goto 0;
+174:goto 0;
+175:goto 0;
+176:goto 0;
+177:goto 0;
+178:goto 0;
+179:goto 0;
+180:goto 0;
+181:goto 0;
+182:goto 0;
+183:goto 0;
+184:goto 0;
+185:goto 0;
+186:goto 0;
+187:goto 0;
+188:goto 0;
+189:goto 0;
+190:goto 0;
+191:goto 0;
+192:goto 0;
+193:goto 0;
+194:goto 0;
+195:goto 0;
+196:goto 0;
+197:goto 0;
+198:goto 0;
+199:goto 0;
+200:rd; wr;                                          { 1111 1111 11 = HALT }
