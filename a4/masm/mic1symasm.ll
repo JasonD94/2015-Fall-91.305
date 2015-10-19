@@ -28,8 +28,8 @@
 [Ii][Nn][Ss][Pp]           return(INSP);
 [Dd][Ee][Ss][Pp]           return(DESP);
 [Hh][Aa][Ll][Tt]           return(HALT);
-[Dd][Ii][Vv]   						 return(DIV);
-[Mm][Uu][Ll][Tt]   				 return(MULT);
+[Dd][Ii][Vv]               return(DIV);
+[Mm][Uu][Ll][Tt]           return(MULT);
 [Rr][Ss][Hh][Ii][Ff][Tt]   return(RSHIFT);
 \".+\"                     return(STR);
 -?[0-9][0-9]*              return(INTEG);
