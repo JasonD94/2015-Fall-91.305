@@ -81,30 +81,30 @@
 80:tir := tir + tir; if n then goto 150;      { if 1111 1111 1x goto line 150 }
 81:alu := tir + tir; if n then goto 130;      { else if 1111 1111 01 goto line 130 }
 82:a := 0;                                   	{ else 1111 1111 00 = MULT }
-83:a := lshift(1);                           	{ get "mmmmmm" value into B }
-84:a := lshift(a + 1);
-85:a := lshift(a + 1);                       	{ except MULT has 6 bit value instead of 4 bit. }
-86:a := lshift(a + 1);
-87:a := lshift(a + 1);
-88:a := a + 1;
-89:b := band(ir, a);                         	{ B now holds "mmmmmm" value to mult by.}
+83:a := lshift(1);                           	{ get "MMM MMM" value into B }
+84:a := lshift(a + 1);												{ similar to RSHIFT, but RSHIFT is 4 bits or SSSS }
+85:a := lshift(a + 1);                       	{ and MULT is MMM MMM }
+86:a := lshift(a + 1);												{ so we need to make a 6 bit mask to get }
+87:a := lshift(a + 1);												{ the MMM MMM value at the end }
+88:a := a + 1;																{ basically 6 bits of 1 - or 111 111 }
+89:b := band(ir, a);                         	{ B now holds "MMM MMM" value to mult by.}
 90:mar := sp; rd;                            	{ need to get the top of the stack now. }
 91:rd;																				{ need to read twice }
 92:c := mbr;                                 	{ stack value is now in C }
 93:d := 0;                                   	{ start result at 0 (D will hold final value) }
-94:alu := b; if z then goto 100;              	{ if mult. by zero, we're done as D is 0 by default }
-95:d := c + d;                               	{ add result to stack value. }
-96:alu := c; if n then goto 102;             	{ check overflow }
-97:alu := d; if n then goto 102;
-98:b := b + (-1); if z then goto 100;         { check to see if we're done adding. }
-99:goto 95;                                  	{ continue looping }
+94:alu := b; if z then goto 100;              { if mult. by zero, we're done as D is 0 by default }
+95:d := c + d;                               	{ result = stack value + result (one round of mult.) }
+96:alu := c; if n then goto 103;             	{ if the orig. number is NEGATIVE, check if it overflowed }
+97:alu := d; if n then goto 102;							{ if the orig. number is NOT neg, check if it overflowed }
+98:b := b + (-1); if z then goto 100;         { check to see if we're done adding (when B = 0) }
+99:goto 95;                                  	{ continue looping (lines 95 to 99) }
 100:ac := 0;                                  { MULT was success, so AC = 0 }
-101:mar := sp; mbr := d; wr;                  { write result to stack }
-102:ac := -1; goto 0;                        	{ MULT overflowed, so AC = -1 }
-103:e := inv(d);
-104:e := e + 1;
-105:alu := e; if n then goto 102;            	{ overflow }
-106:goto 95;                                 	{ not overflow, continue looping }
+101:mar := sp; mbr := d; wr; goto 0;          { write result to stack, then goto beg. of loop }
+102:ac := -1; goto 0;                        	{ MULT overflowed, so AC = -1 & goto beg. of loop }
+103:e := inv(d);															{ take original negative number, inverse it and add 1 }
+104:e := e + 1;																{ this way we can really see if it overflowed }
+105:alu := e; if n then goto 102;            	{ check to see if negative number overflowed }
+106:goto 98;        { not overflow, continue looping (at the end of the loop - NOT THE BEGINNING) }
 107:goto 0;
 108:goto 0;
 109:goto 0;
