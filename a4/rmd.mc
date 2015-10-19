@@ -78,9 +78,9 @@
 77:a := band(ir, smask);                            { 11111110 = DESP }
 78:a := inv(a);
 79:a := a + 1; goto 75;
-80:tir := tir + tir; if n then goto 150;            { if 1111 1111 1x goto line 150, else 0x }
-81:alu := tir + tir; if n then goto 130;            { if 1111 1111 01, then RSHIFT so goto line 130 }
-81: goto 0;                                         { 1111 1111 00 = MULT }
+80:tir := tir + tir; if n then goto 150;            { if 1111 1111 1x goto line 150 }
+81:alu := tir + tir; if n then goto 130;            { else if 1111 1111 01 goto line 130 }
+81: goto 0;                                         { else 1111 1111 00 = MULT }
 82: goto 0;                                         { MULT is not currently implemented }
 83: goto 0;
 84: goto 0;
@@ -130,8 +130,8 @@
 128: goto 0;
 129: goto 0;
 130: a := lshift(1);                                  { 1111 1111 01 = RSHIFT }
-131: a := lshift(a + 1);
-132: a := lshift(a + 1);
+131: a := lshift(a + 1);                              { this is from Prof. Maloney's help directory }
+132: a := lshift(a + 1);  { URL: cs.uml.edu/~bill/cs305/assignment_4_help_dir/promfile_nand_rshift.txt }
 133: a := a + 1;
 134: b := band(ir, a);
 135: b := b + (-1); if n then goto 0;
@@ -149,8 +149,8 @@
 147: goto 0;
 148: goto 0;
 149: goto 0;
-150: alu := tir + tir; if n then goto 200;            { 1111 1111 10 or 1111 1111 11? }
-151: goto 0;                                          { 1111 1111 10 = DIV }
+150: alu := tir + tir; if n then goto 200;            { if 1111 1111 11 goto line 200 }
+151: goto 0;                                          { else 1111 1111 10 = DIV }
 152: goto 0;                                          { DIV is not currently implemented }
 153: goto 0;
 154: goto 0;

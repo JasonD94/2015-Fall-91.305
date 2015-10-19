@@ -1,0 +1,13 @@
+ALU only supports the following operations:
+A + B
+A AND B
+A
+NOT A
+
+N is set when the ALU output is negative
+Z is set when the ALU output is zero
+
+The ALU output then goes into the shifter, which can shift it 1 bit either direction.
+Possible to left shift 2 bits if you do R + R in the ALU, then shift left using the shifter.
+
+MULT:
