@@ -30,7 +30,7 @@
 [Hh][Aa][Ll][Tt]           return(HALT);
 [Dd][Ii][Vv]   						 return(DIV);
 [Mm][Uu][Ll][Tt]   				 return(MULT);
-[Rr][Ss][Hh][Ii][Ff]   		 return(RSHIFT);
+[Rr][Ss][Hh][Ii][Ff][Tt]   return(RSHIFT);
 \".+\"                     return(STR);
 -?[0-9][0-9]*              return(INTEG);
 [A-Za-z][0-9A-Za-z]*:      return(LABEL);

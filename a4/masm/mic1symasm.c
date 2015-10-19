@@ -350,20 +350,37 @@ int main(int argc, char *argv[]) {
       } while (*(yytext+i++) != '\"' && ++pc);
       break;
 
-      /* Three additional cases added here */
+      /*
+       * Three additional cases (DIV, MULT, RSHIFT) added here
+       * I took copied the ADDL / SUBL cases and changed the str_12 to str_6
+       * since we only care about the last 4 or 6 values.
+       *
+       */
       case DIV:
-        // This is just temp
-        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+        if ( ( tok = yylex() ) != INTEG) {
+          fprintf(stderr, "Bad operand after DIV is %s\n", yytext);
+          exit(1);
+        }
+        str_6(yytext);
+        fprintf(p1,"%d  1111111110%s\n",  pc, cstr_6);
       break;
 
       case MULT:
-        // This is just temp
-        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+        if ( ( tok = yylex() ) != INTEG) {
+          fprintf(stderr, "Bad operand after MULT is %s\n", yytext);
+          exit(1);
+        }
+        str_6(yytext);
+        fprintf(p1,"%d   1111111100%s\n",  pc, cstr_6);
       break;
 
       case RSHIFT:
-        // This is just temp
-        fprintf(p1,"%d  U0000000000000000    %s\n", pc, yytext);
+        if ( ( tok = yylex() ) != INTEG) {
+          fprintf(stderr, "Bad operand after RSHIFT is %s\n", yytext);
+          exit(1);
+        }
+        str_6(yytext);
+        fprintf(p1,"%d  1111111101%s\n",  pc, cstr_6);
       break;
 
     case JUNK:
