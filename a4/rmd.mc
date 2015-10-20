@@ -94,15 +94,15 @@
 93:d := 0;                                   	{ start result at 0 (D will hold final value) }
 94:alu := b; if z then goto 100;              { if mult. by zero, we're done as D is 0 by default }
 95:d := c + d;                               	{ result = stack value + result (one round of mult.) }
-96:alu := c; if n then goto 104;             	{ if the orig. number is NEGATIVE, check if it overflowed }
-97:alu := d; if n then goto 103;							{ if the orig. number is NOT neg, check if it overflowed }
+96:alu := c; if n then goto 104;       	{ if the orig. number is NEGATIVE, check if it overflowed }
+97:alu := d; if n then goto 103;			{ if the orig. number is NOT neg, check if it overflowed }
 98:b := b + (-1); if z then goto 100;         { check to see if we're done adding (when B = 0) }
 99:goto 95;                                  	{ continue looping (lines 95 to 99) }
 100:ac := 0;                                  { MULT was success, so AC = 0 }
 101:mar := sp; mbr := d; wr;                  { write result to stack }
 102:wr; goto 0;                               { write twice and goto beg. of loop }
 103:ac := -1; goto 0;                        	{ MULT overflowed, so AC = -1 & goto beg. of loop }
-104:e := inv(d);															{ take original negative number, inverse it and add 1 }
+104:e := inv(d);														{ take original negative number, inverse it and add 1 }
 105:e := e + 1;																{ this way we can really see if it overflowed }
 106:alu := e; if n then goto 103;            	{ check to see if negative number overflowed }
 107:goto 98;        { not overflow, continue looping (at the end of the loop - NOT THE BEGINNING) }
@@ -157,14 +157,13 @@
 156:a := mbr;                                         { store SP (dividend) into A }
 157:d := 0;                                           { start the remainder at 0 }
 158:e := 0;                                           { counter (e) starts at 0 }
-158:c := inv(b);      { make C negative so we can do subtraction by doing addition }
-159:c := c + 1;       { add 1 to inverse to get negative }
-160:alu := a; if n then goto 179;     { zero case, if dividend is zero, then result should be zero. };
-161:d := a + c;                       { subtract the divisor from A (dividend). }
-162:alu := d; if z then goto 180;     { if the remainder hits 0, we're done! }
-163:alu := d; if n then goto 175;     { if the remainder hits negative, almost done. }
-164:goto 161;                         { keep looping til remainder is 0 or negative. }
-165:goto 0;
+159:c := inv(b);      { make C negative so we can do subtraction by doing addition }
+160:c := c + 1;       { add 1 to inverse to get negative }
+161:alu := a; if n then goto 179;     { zero case, if dividend is zero, then result should be zero. };
+162:d := a + c;                       { subtract the divisor from A (dividend). }
+163:alu := d; if z then goto 180;     { if the remainder hits 0, we're done! }
+164:alu := d; if n then goto 170;     { if the remainder hits negative, almost done. }
+165:goto 160;                         { keep looping til remainder is 0 or negative. }
 166:goto 0;
 167:goto 0;
 168:goto 0;
