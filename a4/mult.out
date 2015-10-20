@@ -1,0 +1,127 @@
+
+ProgramCounter : 0000000000000100  , or     4  or signed      4
+Accumulator    : 0000000000000000  , or     0  or signed      0
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000000  , or     0  or signed      0
+CRegister      : 0000100111101110  , or  2542  or signed   2542
+DRegister      : 0000000000000000  , or     0  or signed      0
+ERegister      : 0000000000000000  , or     0  or signed      0
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 62
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1023 has value 0000000000000000 , or     0  or signed      0
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type decimal address to view memory,  q  to quit or  c  to continue: 
+The new PC is  : 0000000000000100
+
+
+ProgramCounter : 0000000000001001  , or     9  or signed      9
+Accumulator    : 0000000000000000  , or     0  or signed      0
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000000  , or     0  or signed      0
+CRegister      : 1111111010010110  , or 65174  or signed   -362
+DRegister      : 1100101110101110  , or 52142  or signed -13394
+ERegister      : 0011010001010010  , or 13394  or signed  13394
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 430
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1023 has value 1100101110101110 , or 52142  or signed -13394
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type decimal address to view memory,  q  to quit or  c  to continue: 
+The new PC is  : 0000000000001001
+
+
+ProgramCounter : 0000000000001110  , or    14  or signed     14
+Accumulator    : 0000000000000000  , or     0  or signed      0
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000000  , or     0  or signed      0
+CRegister      : 0000001000001000  , or   520  or signed    520
+DRegister      : 0111111111111000  , or 32760  or signed  32760
+ERegister      : 0011010001010010  , or 13394  or signed  13394
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 817
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1023 has value 0111111111111000 , or 32760  or signed  32760
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type decimal address to view memory,  q  to quit or  c  to continue: 
+The new PC is  : 0000000000001110
+
+
+ProgramCounter : 0000000000010011  , or    19  or signed     19
+Accumulator    : 1111111111111111  , or 65535  or signed     -1
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000001  , or     1  or signed      1
+CRegister      : 1111100000000000  , or 63488  or signed  -2048
+DRegister      : 1000000000000000  , or 32768  or signed -32768
+ERegister      : 1000000000000000  , or 32768  or signed -32768
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 1013
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1023 has value 1111100000000000 , or 63488  or signed  -2048
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type decimal address to view memory,  q  to quit or  c  to continue: 
+The new PC is  : 0000000000010011
+
+
+ProgramCounter : 0000000000011000  , or    24  or signed     24
+Accumulator    : 1111111111111111  , or 65535  or signed     -1
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000100  , or     4  or signed      4
+CRegister      : 0000001011001011  , or   715  or signed    715
+DRegister      : 1000000001111010  , or 32890  or signed -32646
+ERegister      : 1000000000000000  , or 32768  or signed -32768
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 1312
+
+Type decimal address to view memory,  q  to quit or  c  to continue:      the location 1023 has value 0000001011001011 , or   715  or signed    715
+Type  <Enter>  to continue debugging
+Type        q  to quit
+Type        f for forward range
+Type        b for backward range: Type decimal address to view memory,  q  to quit or  c  to continue: 
+The new PC is  : 0000000000011000
+
+
+ProgramCounter : 0000000000011101  , or    29  or signed     29
+Accumulator    : 0000000000000000  , or     0  or signed      0
+InstructionReg : 1111111111000000  , or 65472  or signed    -64
+TempInstr      : 1100000000000000  , or 49152  or signed -16384
+StackPointer   : 0000001111111111  , or  1023  or signed   1023
+ARegister      : 0000000000111111  , or    63  or signed     63
+BRegister      : 0000000000000000  , or     0  or signed      0
+CRegister      : 1111111111111111  , or 65535  or signed     -1
+DRegister      : 1111111111001001  , or 65481  or signed    -55
+ERegister      : 0000000000110111  , or    55  or signed     55
+FRegister      : 0000000000000000  , or     0  or signed      0
+
+Total cycles   : 1824
+
+Type decimal address to view memory,  q  to quit or  c  to continue: MIC-1 emulator finishing, goodbye
+

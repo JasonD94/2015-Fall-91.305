@@ -3,7 +3,7 @@
 DIR := masm
 
 # Run the whole Makefile
-all: assembler prom build
+all: assembler prom build test
 
 # cd into the masm directory and call the Makefile for masm
 assembler:
