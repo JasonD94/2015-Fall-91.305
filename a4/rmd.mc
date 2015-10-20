@@ -94,18 +94,18 @@
 93:d := 0;                                   	{ start result at 0 (D will hold final value) }
 94:alu := b; if z then goto 100;              { if mult. by zero, we're done as D is 0 by default }
 95:d := c + d;                               	{ result = stack value + result (one round of mult.) }
-96:alu := c; if n then goto 103;             	{ if the orig. number is NEGATIVE, check if it overflowed }
-97:alu := d; if n then goto 102;							{ if the orig. number is NOT neg, check if it overflowed }
+96:alu := c; if n then goto 104;             	{ if the orig. number is NEGATIVE, check if it overflowed }
+97:alu := d; if n then goto 103;							{ if the orig. number is NOT neg, check if it overflowed }
 98:b := b + (-1); if z then goto 100;         { check to see if we're done adding (when B = 0) }
 99:goto 95;                                  	{ continue looping (lines 95 to 99) }
 100:ac := 0;                                  { MULT was success, so AC = 0 }
-101:mar := sp; mbr := d; wr; goto 0;          { write result to stack, then goto beg. of loop }
-102:ac := -1; goto 0;                        	{ MULT overflowed, so AC = -1 & goto beg. of loop }
-103:e := inv(d);															{ take original negative number, inverse it and add 1 }
-104:e := e + 1;																{ this way we can really see if it overflowed }
-105:alu := e; if n then goto 102;            	{ check to see if negative number overflowed }
-106:goto 98;        { not overflow, continue looping (at the end of the loop - NOT THE BEGINNING) }
-107:goto 0;
+101:mar := sp; mbr := d; wr;                  { write result to stack }
+102:wr; goto 0;                               { write twice and goto beg. of loop }
+103:ac := -1; goto 0;                        	{ MULT overflowed, so AC = -1 & goto beg. of loop }
+104:e := inv(d);															{ take original negative number, inverse it and add 1 }
+105:e := e + 1;																{ this way we can really see if it overflowed }
+106:alu := e; if n then goto 103;            	{ check to see if negative number overflowed }
+107:goto 98;        { not overflow, continue looping (at the end of the loop - NOT THE BEGINNING) }
 108:goto 0;
 109:goto 0;
 110:goto 0;
@@ -148,42 +148,43 @@
 147:goto 0;
 148:goto 0;
 149:goto 0;
-150:alu := tir + tir; if n then goto 200;            { if 1111 1111 11 goto line 200 }
-151:goto 0;                                          { else 1111 1111 10 = DIV }
-152:goto 0;                                          { DIV is not currently implemented }
-153:goto 0;
-154:goto 0;
-155:goto 0;
-156:goto 0;
-157:goto 0;
-158:goto 0;
-159:goto 0;
-160:goto 0;
-161:goto 0;
-162:goto 0;
-163:goto 0;
-164:goto 0;
+150:alu := tir + tir; if n then goto 200;             { if 1111 1111 11 goto line 200 }
+151:mar := sp; f := sp + 1; rd;                       { else 1111 1111 10 = DIV }
+152:rd;                                               { read SP+1. Remember to read twice. }
+153:b := mbr;                                         { store SP+1 (divisor) into B }
+154:mar := sp; f := sp + 1; rd;                       { read SP. }
+155:rd;                                               { Remember to read twice. }
+156:a := mbr;                                         { store SP (dividend) into A }
+157:d := 0;                                           { start the remainder at 0 }
+158:e := 0;                                           { counter (e) starts at 0 }
+158:c := inv(b);      { make C negative so we can do subtraction by doing addition }
+159:c := c + 1;       { add 1 to inverse to get negative }
+160:alu := a; if n then goto 179;     { zero case, if dividend is zero, then result should be zero. };
+161:d := a + c;                       { subtract the divisor from A (dividend). }
+162:alu := d; if z then goto 180;     { if the remainder hits 0, we're done! }
+163:alu := d; if n then goto 175;     { if the remainder hits negative, almost done. }
+164:goto 161;                         { keep looping til remainder is 0 or negative. }
 165:goto 0;
 166:goto 0;
 167:goto 0;
 168:goto 0;
 169:goto 0;
-170:goto 0;
-171:goto 0;
-172:goto 0;
+170:d := inv(d);                    { since the remainder is negative, make it positive }
+171:d := d + 1;                     { by flipping the bits / adding 1. }
+172:goto 180;                       { now we're done! }
 173:goto 0;
 174:goto 0;
 175:goto 0;
 176:goto 0;
 177:goto 0;
 178:goto 0;
-179:goto 0;
-180:goto 0;
-181:goto 0;
-182:goto 0;
-183:goto 0;
-184:goto 0;
-185:goto 0;
+179:d := 0;                         { make quotient 0 }
+180:sp := sp + (-1);                { move stack ptr back one }
+181:mar := sp; mbr := e; wr;        { push remainder onto stack }
+182:wr;                             { write twice! }
+183:sp := sp + (-1);                { move stack ptr back one }
+184:mar := sp; mbr := d; wr;        { push quotient onto stack }
+185:wr; goto 0;                     { write twice! also return to beg. of loop }
 186:goto 0;
 187:goto 0;
 188:goto 0;

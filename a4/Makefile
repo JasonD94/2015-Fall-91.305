@@ -17,7 +17,7 @@ prom: rmd.mc
 build:
 	./masm/masm < a4_rshift_test.asm > rshift.obj
 	./masm/masm < a4_mult_test.asm > mult.obj
-	#./masm/masm < a4_div_test.asm > div.obj
+	./masm/masm < a4_div_test.asm > div.obj
 
 # Test the input files (.ins) against the output files (.outs)
 # This is from the assignment 3 Makefile

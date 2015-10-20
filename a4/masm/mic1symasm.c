@@ -351,21 +351,18 @@ int main(int argc, char *argv[]) {
       break;
 
       /*
-       * Three additional cases (DIV, MULT, RSHIFT) added here
-       * I took copied the ADDL / SUBL cases and changed the str_12 to str_6
-       * since we only care about the last 4 or 6 values.
-       *
+       *  Three additional cases (DIV, MULT, RSHIFT) added here
+       *  I took copied the ADDL / SUBL cases and changed the str_12 to str_6
+       *  since we only care about the last 4 or 6 values.
+       *  HALT also technically ends in 11
        */
-      case DIV:
-        if ( ( tok = yylex() ) != INTEG) {
-          fprintf(stderr, "Bad operand after DIV is %s\n", yytext);
-          exit(1);
-        }
-        str_6(yytext);
-        fprintf(p1,"%d  1111111110%s\n",  pc, cstr_6);
+      case DIV:   // DIV ends in 10
+        // We actually don't even need the "if (tok = yylex() )" stuff!
+        // since DIV ignores the MMMMMM value anyway!
+        fprintf(p1,"%d  1111111110000000\n",  pc);
       break;
 
-      case MULT:
+      case MULT:  // MULT ends in 00
         if ( ( tok = yylex() ) != INTEG) {
           fprintf(stderr, "Bad operand after MULT is %s\n", yytext);
           exit(1);
@@ -374,7 +371,7 @@ int main(int argc, char *argv[]) {
         fprintf(p1,"%d   1111111100%s\n",  pc, cstr_6);
       break;
 
-      case RSHIFT:
+      case RSHIFT:  // RSHIFT ends in 01
         if ( ( tok = yylex() ) != INTEG) {
           fprintf(stderr, "Bad operand after RSHIFT is %s\n", yytext);
           exit(1);
