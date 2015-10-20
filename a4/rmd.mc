@@ -108,7 +108,7 @@
 107:goto 98;        { not overflow, continue looping (at the end of the loop - NOT THE BEGINNING) }
 108:a := lshift(1);                             { 1111 1111 01 = RSHIFT }
 109:a := lshift(a + 1);                         { this is from Prof. Maloney's help directory }
-110:a := lshift(a + 1);  { URL: cs.uml.edu/~bill/cs305/assignment_4_help_dir/promfile_nand_rshift.txt }
+110:a := lshift(a + 1);  { URL: http://www.cs.uml.edu/~bill/cs305/assignment_4_help_dir/promfile_nand_rshift.txt }
 111:a := a + 1;
 112:b := band(ir, a);
 113:b := b + (-1); if n then goto 137;
